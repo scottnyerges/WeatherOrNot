@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <title>WEATHER OR NOT</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=font1|font2|etc" type="text/css">
   <link rel="stylesheet" href="style.css" type="text/css">
   </head>
@@ -24,7 +26,62 @@
 <!-- Best result is displayed: destination name, current temp, flight data, link to external site -->
 <!-- App resets -->
 
+<!-- Header -->
+	<div class="page-header">
+		<h1 class="text-center">Weather or Not</h1>
+		<h3 class="text-center">I want to go somewhere with awesome weather!</h3>
+	</div>
 
+<!-- User input -->
+  <div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Get me outta here!</h3>
+      </div>
+      <div class="panel-body">
+        <form>
+              <div class="form-group">
+                <label for="start-input">Starting destination: </label>
+                <input class="form-control" id="start-input" type="text">
+              </div>
+              <div class="form-group">
+                <label for="temp-input">desired weather: </label>
+                <input class="form-control" id="temp-input" type="Temperature">
+              </div>
+              <div class="form-group">
+                <label for="departure-input">Departure Date: </label>
+                <input class="form-control" id="departure-input" type="Date">
+              </div>
+              <div class="form-group">
+                <label for="return-input">Return date: </label>
+                <input class="form-control" id="return-input" type="Date"></textarea>
+              </div>
+              <button class="btn btn-danger" id="add-user" type="submit">Submit</button>
+            </form>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <h3>Search Results</h3>            
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Destination</th>
+        <th>Temperature</th>
+        <th>Departure Date</th>
+        <th>Arrival Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tbody>
+    </tbody>
+  </table>
+</div>
 
 
   
