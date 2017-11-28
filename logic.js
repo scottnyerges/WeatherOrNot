@@ -1,3 +1,4 @@
+
 // UPDATED AS OF 2:45 TUESDAY BY SCOTT
 
 // declare some global variables so we can change em with functions
@@ -17,19 +18,48 @@ $("#add-user").on("click", function(){
 	 uEndDate = $("#return-input").val().trim();
 
 // console log the user variables
+
+
+
+
+
+
+// when the submit button is pressed, run the api and determine find the cheapest flights 
+// ajax set up 
+
+
+
+
+$("#add-user").on("click", function(){
+	event.preventDefault();
+	var origin = $("#start-input").val().trim();
+	var uTemp = $("#temp-input").val().trim();
+	// var wTemp = [];
+	var uStartDate = $("#departure-input").val().trim();
+	var uEndDate = $("#return-input").val().trim();
+
+
+
 	console.log(origin);
 	console.log(uTemp);
 	console.log(uStartDate);
 	console.log(uEndDate);
 
+
 // run the get flights function
 getFlights();
 
 // clears out the input fields after button click
+
+
+
+
+
 	$("#start-input").val("");
 	$("#temp-input").val("");
 	$("#departure-input").val("");
 	$("#return-input").val("");
+
 
 
 });
@@ -61,3 +91,18 @@ console.log(fResults[0].DestinationLocation);
 
 
 	// 
+
+	
+
+// var resultInfo = $("<tr><th>" + trainName + "</th><th>" 
+// 	+ destination + "</th><th>" + frequency + "</th><th>"
+// 	+ arrival + "</th><th>" + minutesAway + "</th></tr>");
+
+	
+
+});
+
+	
+
+
+
