@@ -5,7 +5,9 @@
     <title>WEATHER OR NOT</title>
 
   <link rel="stylesheet" href="style.css" type="text/css">
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+
 
 
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -38,10 +40,20 @@
 <!-- App resets -->
 
 <!-- Header -->
-	<div class="page-header">
-		<h1 class="text-center">Weather or Not</h1>
-		<h3 class="text-center">I want to go somewhere with awesome weather!</h3>
+
+<div class="jumbotron">
+
+<div class="page-header">
+    <h1 class="text-center">Weather or Not</h1>
+    <h3 class="text-center">I want to go somewhere with awesome weather!</h3>
+
+    <video loop id ="video-background"
+    src="https://v.ftcdn.net/00/79/61/87/700_F_79618727_LLktZuPQwP3OpvvXUsqilZC9vANCrkI3_ST.mp4"
+    autoplay/>
+
 	</div>
+</div>
+
 
 <!-- User input -->
   <div class="row">
@@ -92,15 +104,11 @@
         <th>Temperature</th>
         <th>Departure Date</th>
         <th>Arrival Date</th>
+        <th>Price</th>
+        <th>Link</th>
       </tr>
     </thead>
-    <tbody>
-      <div id="results"></div>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tbody>
+    <tbody id="results">
     </tbody>
   </table>
 </div>
