@@ -1,10 +1,26 @@
 
+// UPDATED AS OF 2:45 TUESDAY BY SCOTT
+
+// declare some global variables so we can change em with functions
+var origin;
+var uTemp;
+var uStartDate;
+var uEndDate;
+
+// when btn pressed, take values from inputs and set global
+// variable values to them
+$("#add-user").on("click", function(){
+	event.preventDefault();
+	 origin = $("#start-input").val().trim();
+	 uTemp = $("#temp-input").val().trim();
+	// var wTemp = [];
+	 uStartDate = $("#departure-input").val().trim();
+	 uEndDate = $("#return-input").val().trim();
+
+// console log the user variables
 
 
 
-
-// when the submit button is pressed, run the api and determine find the cheapest flights 
-// ajax set up 
 
 var origin;
 var uTemp;
@@ -13,38 +29,29 @@ var uEndDate;
 var queryURL;
 
 
+ 
 
-
-function getTemp(){
-	event.preventDefault();
-	 origin = $("#start-input").val().trim();
-	 uTemp = $("#temp-input").val().trim();
-	//  wTemp = [];
-	 uStartDate = $("#departure-input").val().trim();
-	 uEndDate = $("#return-input").val().trim();
-	 queryURL = "http://api.wunderground.com/api/25befb141962c397/geolookup/conditions/q/iata:" + origin + ".json"
-
-
-
-	$.ajax({
-		url: queryURL,
-		method: "GET"
-
-	})
-
-	.done(function(response){
-		console.log(response);
-		console.log(response.current_observation.temp_f);
-
-	})
 
 	console.log(origin);
 	console.log(uTemp);
 	console.log(uStartDate);
 	console.log(uEndDate);
 
+// run the get flights function
+getFlights();
 
 
+// run the get flights function
+getFlights();
+
+// clears out the input fields after button click
+
+
+
+
+
+
+// clears out the input fields after button click
 
 	$("#start-input").val("");
 	$("#temp-input").val("");
@@ -52,8 +59,6 @@ function getTemp(){
 	$("#return-input").val("");
 
 
-
-// };
 
 
 
@@ -91,38 +96,8 @@ console.log("4 " + fResults[4].DestinationLocation);
 });
 
 
-
-
-
-
-	
-	queryURL = "http://api.wunderground.com/api/25befb141962c397/geolookup/conditions/q/iata:" + destinationResults + ".json"
-
-	$.ajax({
-		url: queryURL,
-		method: "GET"
-
-	})
-
-	.done(function(response){
-		console.log(response);
-		console.log("destination " + response.location.city);
-		console.log("destination temp " + response.current_observation.temp_f);
-
-	})
-
-
-
-
-};
-
-$("#add-user").on("click", function(){
-	getTemp();
-	// getFlights();
-	// searchResults();
 	
 });
-
 
 
 
