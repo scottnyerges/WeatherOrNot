@@ -7,7 +7,7 @@ var fDestination;
 var fPrice;
 var wTemp;
 var wDestination;
-var i = 0;
+var i = 0;  
 var fCount;
 
 // when btn pressed, take values from inputs and set global
@@ -31,6 +31,7 @@ $("#add-user").on("click", function() {
 
     // run the get flights function
     getFlights();
+
 
     // clears out the input fields after button click
     $("#start-input").val("");
@@ -116,16 +117,29 @@ function getTemps() {
             i++;
             console.log(i);
             if (wTemp - 7 < uTemp && uTemp < wTemp + 7) {
-                $("#results").append(`
+         
+                
+                	var newRow = $(`
+
         <tr>
         	<td scope=row>${wDestination}</td>
+			
         	<td>${wTemp} F</td>
             <td>${uStartDate}</td>
             <td>${uEndDate}</td>
             <td>$${fPrice}</td>
-            <td><a href="https://www.kayak.com/flights/${origin}-${fDestination}/${uStartDate}/${uEndDate}?sort=price_a" target="_blank">Link</a></td>            
-        </tr>
+            <td> <a href="https://www.kayak.com/flights/${origin}-${fDestination}/${uStartDate}/${uEndDate}?sort=price_a" target="_blank">Link</a></td>            
+      </tr>
         `);
+                $("#results").append(newRow);
+                newRow.click(function(){
+                	var a = $(this).find("a") //.click();
+                	console.log(a.attr("href"));
+                	window.open(a.attr('href'), '_blank');
+                	// if(href){
+                	// window.location = href;
+                // }
+                })
 
             };
             if (i < fCount) {
@@ -134,4 +148,6 @@ function getTemps() {
 
         })
 
-}
+};
+
+
