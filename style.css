@@ -7,11 +7,12 @@
 }
 #video-background{
 		position: fixed;
-		/*height:30%;*/
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
+        width:auto !important;
+        height:auto !important;
         overflow: hidden;
         z-index: -100;
         /*width:100%;*/
