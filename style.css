@@ -1,6 +1,7 @@
 /* THIS IS A STYLE SHEET */
 
 
+
 .jumbotron{
 	position: relative;
 	z-index: -101;
@@ -17,3 +18,4 @@
         z-index: -100;
         /*width:100%;*/
 }
+
