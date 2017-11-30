@@ -40,6 +40,7 @@ background-color: lightgray;
 
 }
 
+
 /* BUTTON */
 .btn {
 background-color: hsl(207, 45%, 56%) !important;
@@ -56,6 +57,7 @@ border-color: #5c93c1 #5c93c1 hsl(207, 45%, 46.5%);
 color: #333 !important;
 text-shadow: 0 1px 1px rgba(255, 255, 255, 0.62);
 -webkit-font-smoothing: antialiased;
+
 }
 
 /* RESPONSIVE DESIGN */
@@ -76,6 +78,8 @@ border-width: 1px;
 }
 }
 @media (min-width: 481px) and (max-width: 767px) {
+
+
 
 .wrapper {
 grid-template-rows: 150px 1fr 50px 400px;
@@ -108,4 +112,5 @@ border-color: black;
 border-style: solid;
 border-width: 1px;
 }
+
 }
