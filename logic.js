@@ -1,3 +1,21 @@
+
+
+
+// firebase access
+var config = {
+    apiKey: "AIzaSyDs0DhM5MNy7Ztge5tqW17NH6ipbgsyCHI",
+    authDomain: "weatherornot-95c09.firebaseapp.com",
+    databaseURL: "https://weatherornot-95c09.firebaseio.com",
+    projectId: "weatherornot-95c09",
+    storageBucket: "weatherornot-95c09.appspot.com",
+    messagingSenderId: "477066938219"
+  };
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+
+
+
 // declare some global variables so we can change em with functions
 var origin = "DFW";
 var uTemp = 60;
@@ -10,11 +28,14 @@ var wDestination;
 var i = 0;  
 var fCount;
 
+
+
+
 // when btn pressed, take values from inputs and set global
 // variable values to them
 $("#add-user").on("click", function() {
     event.preventDefault();
-    origin = $("#start-input").val().trim();
+    origin = $("#start-input").attr("code");
     uTemp = $("#temp-input").val().trim();
     // var wTemp = [];
     uStartDate = $("#departure-input").val().trim();
@@ -96,7 +117,7 @@ function getFlights() {
 function getTemps() {
     console.log("running getTemps");
 
-    var wQueryURL = "http://api.wunderground.com/api/25befb141962c397/geolookup/conditions/q/iata:" +
+    var wQueryURL = "https://api.wunderground.com/api/25befb141962c397/geolookup/conditions/q/iata:" +
         fDestination + ".json";
     $.ajax({
             method: "GET",
@@ -122,13 +143,13 @@ function getTemps() {
                 	var newRow = $(`
 
         <tr>
-        	<td scope=row>${wDestination}</td>
+        	<td scope=row class="trending">${wDestination}</td>
 			
-        	<td>${wTemp} F</td>
+        	<td class="trending_temp">${wTemp} F</td>
             <td>${uStartDate}</td>
             <td>${uEndDate}</td>
             <td>$${fPrice}</td>
-            <td> <a href="https://www.kayak.com/flights/${origin}-${fDestination}/${uStartDate}/${uEndDate}?sort=price_a" target="_blank">Link</a></td>            
+            // <td> <a href="https://www.kayak.com/flights/${origin}-${fDestination}/${uStartDate}/${uEndDate}?sort=price_a" target="_blank"></a></td>            
       </tr>
         `);
                 $("#results").append(newRow);
@@ -136,9 +157,44 @@ function getTemps() {
                 	var a = $(this).find("a") //.click();
                 	console.log(a.attr("href"));
                 	window.open(a.attr('href'), '_blank');
-                	// if(href){
-                	// window.location = href;
-                // }
+
+
+                	var $row = $(this).closest("tr");   
+                    var place = $row.find(".trending").text();
+                    var temp = $row.find(".trending_temp").text();
+
+                    console.log(place);
+                    console.log(temp);
+                    var trendingP = place;
+                    var trendingT = temp;
+                    var recentP = place;
+                    var recentT = temp;
+                    
+                    database.ref("resultsPlace").push({
+                        
+                        trendingP: trendingP,
+
+                        });
+
+                    database.ref("resultsTemp").push({
+
+                        trendingT: trendingT,
+
+                    });
+
+                    database.ref("recentPlace").set({
+
+                        recentP: recentP,
+
+                    })
+
+                    database.ref("recentTemp").set({
+
+                        recentT: recentT,
+
+                    })
+
+                    
                 })
 
             };
@@ -149,5 +205,68 @@ function getTemps() {
         })
 
 };
+
+// autocomplete logic
+$("#start-input").autocomplete({
+    source: airportList,
+    minLength: 3,
+    select: function (event, ui) {
+      var value = ui.item.value;
+      $("#start-input").attr("code",value.substr(0,3));
+    }
+});
+
+database.ref("resultsPlace").on("child_added", function(snapshot) {
+
+        console.log(snapshot.val().trendingP);
+
+
+
+    },function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+
+
+database.ref("resultsTemp").on("child_added", function(snapshot) {
+
+        // console.log(snapshot.val().minutesAway);
+        console.log(snapshot.val().trendingT);
+
+
+    },function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+
+
+
+
+database.ref("recentPlace" ).on('value', function(snapshot) {
+
+        console.log(snapshot.val().recentP);
+
+        var recentSearchP = $("<h2>" + snapshot.val().recentP + "</h2>");
+        $("#trendingPlace").html(recentSearchP);
+        
+
+
+
+    },function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    }); 
+
+
+database.ref("recentTemp").on('value', function(snapshot) {
+
+        console.log(snapshot.val().recentT);
+
+        var recentSearchT = $("<h2>" + snapshot.val().recentT + "</h2>");
+        $("#trendingTemp").html(recentSearchT);
+        
+
+
+
+    },function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
 
 
