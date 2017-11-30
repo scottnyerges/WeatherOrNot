@@ -6,7 +6,7 @@
 
   
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
 
 
 
@@ -16,9 +16,13 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+    
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Oswald|Saira+Semi+Condensed" rel="stylesheet">
 
     <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> 
 
@@ -47,10 +51,13 @@
 <div class="page-header">
     <h1 class="text-center">Weather or Not</h1>
     <h3 class="text-center">I want to go somewhere with awesome weather!</h3>
+    <div class="text-center" id="trendingPlace"></div>
+    <div class="text-center" id="trendingTemp"></div>
 
     <video loop id ="video-background"
     src="https://v.ftcdn.net/00/79/61/87/700_F_79618727_LLktZuPQwP3OpvvXUsqilZC9vANCrkI3_ST.mp4"
     autoplay/>
+
 
 	</div>
 </div>
@@ -80,7 +87,7 @@
 
               <div class="form-group">
                 <label for="departure-input">Departure Date: </label>
-                <input class="form-control" id="departure-input" type="Date">
+                <input class="form-control" id="departure-input" type="Date" data-provide="datepicker">
               </div>
 
 

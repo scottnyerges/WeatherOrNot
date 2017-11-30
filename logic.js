@@ -29,6 +29,8 @@ var i = 0;
 var fCount;
 
 
+
+
 // when btn pressed, take values from inputs and set global
 // variable values to them
 $("#add-user").on("click", function() {
@@ -143,7 +145,7 @@ function getTemps() {
         <tr>
         	<td scope=row class="trending">${wDestination}</td>
 			
-        	<td>${wTemp} F</td>
+        	<td class="trending_temp">${wTemp} F</td>
             <td>${uStartDate}</td>
             <td>${uEndDate}</td>
             <td>$${fPrice}</td>
@@ -156,19 +158,41 @@ function getTemps() {
                 	console.log(a.attr("href"));
                 	window.open(a.attr('href'), '_blank');
 
-                	var $row = $(this).closest("tr");   
-                    var $text = $row.find(".trending").text();
 
-                    console.log($text);
-                    var trendingR = $text;
+                	var $row = $(this).closest("tr");   
+                    var place = $row.find(".trending").text();
+                    var temp = $row.find(".trending_temp").text();
+
+                    console.log(place);
+                    console.log(temp);
+                    var trendingP = place;
+                    var trendingT = temp;
+                    var recentP = place;
+                    var recentT = temp;
                     
-                    database.ref("results").push({
-                        // fDestination: fDestination,
-                        // wDestination: wDestination,
-                        // wTemp: wTemp,
-                        trendingR: trendingR,
+                    database.ref("resultsPlace").push({
+                        
+                        trendingP: trendingP,
 
                         });
+
+                    database.ref("resultsTemp").push({
+
+                        trendingT: trendingT,
+
+                    });
+
+                    database.ref("recentPlace").set({
+
+                        recentP: recentP,
+
+                    })
+
+                    database.ref("recentTemp").set({
+
+                        recentT: recentT,
+
+                    })
 
                     
                 })
@@ -183,11 +207,9 @@ function getTemps() {
 };
 
 
-database.ref("results").on("child_added", function(snapshot) {
+database.ref("resultsPlace").on("child_added", function(snapshot) {
 
-        // console.log(snapshot.val().minutesAway);
-        console.log(snapshot.val().trendingR);
-
+        console.log(snapshot.val().trendingP);
 
 
 
@@ -196,6 +218,46 @@ database.ref("results").on("child_added", function(snapshot) {
     });
 
 
+database.ref("resultsTemp").on("child_added", function(snapshot) {
 
+        // console.log(snapshot.val().minutesAway);
+        console.log(snapshot.val().trendingT);
+
+
+    },function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+
+
+
+
+database.ref("recentPlace" ).on('value', function(snapshot) {
+
+        console.log(snapshot.val().recentP);
+
+        var recentSearchP = $("<h2>" + snapshot.val().recentP + "</h2>");
+        $("#trendingPlace").html(recentSearchP);
+        
+
+
+
+    },function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    }); 
+
+
+database.ref("recentTemp").on('value', function(snapshot) {
+
+        console.log(snapshot.val().recentT);
+
+        var recentSearchT = $("<h2>" + snapshot.val().recentT + "</h2>");
+        $("#trendingTemp").html(recentSearchT);
+        
+
+
+
+    },function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
 
 
