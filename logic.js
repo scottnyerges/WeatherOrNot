@@ -1,3 +1,21 @@
+
+
+
+// firebase access
+var config = {
+    apiKey: "AIzaSyDs0DhM5MNy7Ztge5tqW17NH6ipbgsyCHI",
+    authDomain: "weatherornot-95c09.firebaseapp.com",
+    databaseURL: "https://weatherornot-95c09.firebaseio.com",
+    projectId: "weatherornot-95c09",
+    storageBucket: "weatherornot-95c09.appspot.com",
+    messagingSenderId: "477066938219"
+  };
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+
+
+
 // declare some global variables so we can change em with functions
 var origin = "DFW";
 var uTemp = 60;
@@ -9,6 +27,7 @@ var wTemp;
 var wDestination;
 var i = 0;  
 var fCount;
+
 
 // when btn pressed, take values from inputs and set global
 // variable values to them
@@ -122,13 +141,13 @@ function getTemps() {
                 	var newRow = $(`
 
         <tr>
-        	<td scope=row>${wDestination}</td>
+        	<td scope=row class="trending">${wDestination}</td>
 			
         	<td>${wTemp} F</td>
             <td>${uStartDate}</td>
             <td>${uEndDate}</td>
             <td>$${fPrice}</td>
-            <td> <a href="https://www.kayak.com/flights/${origin}-${fDestination}/${uStartDate}/${uEndDate}?sort=price_a" target="_blank">Link</a></td>            
+            // <td> <a href="https://www.kayak.com/flights/${origin}-${fDestination}/${uStartDate}/${uEndDate}?sort=price_a" target="_blank"></a></td>            
       </tr>
         `);
                 $("#results").append(newRow);
@@ -136,9 +155,22 @@ function getTemps() {
                 	var a = $(this).find("a") //.click();
                 	console.log(a.attr("href"));
                 	window.open(a.attr('href'), '_blank');
-                	// if(href){
-                	// window.location = href;
-                // }
+
+                	var $row = $(this).closest("tr");   
+                    var $text = $row.find(".trending").text();
+
+                    console.log($text);
+                    var trendingR = $text;
+                    
+                    database.ref("results").push({
+                        // fDestination: fDestination,
+                        // wDestination: wDestination,
+                        // wTemp: wTemp,
+                        trendingR: trendingR,
+
+                        });
+
+                    
                 })
 
             };
@@ -149,5 +181,21 @@ function getTemps() {
         })
 
 };
+
+
+database.ref("results").on("child_added", function(snapshot) {
+
+        // console.log(snapshot.val().minutesAway);
+        console.log(snapshot.val().trendingR);
+
+
+
+
+    },function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+
+
+
 
 
