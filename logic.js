@@ -35,7 +35,7 @@ var fCount;
 // variable values to them
 $("#add-user").on("click", function() {
     event.preventDefault();
-    origin = $("#start-input").val().trim();
+    origin = $("#start-input").attr("code");
     uTemp = $("#temp-input").val().trim();
     // var wTemp = [];
     uStartDate = $("#departure-input").val().trim();
@@ -117,7 +117,7 @@ function getFlights() {
 function getTemps() {
     console.log("running getTemps");
 
-    var wQueryURL = "http://api.wunderground.com/api/25befb141962c397/geolookup/conditions/q/iata:" +
+    var wQueryURL = "https://api.wunderground.com/api/25befb141962c397/geolookup/conditions/q/iata:" +
         fDestination + ".json";
     $.ajax({
             method: "GET",
@@ -206,6 +206,15 @@ function getTemps() {
 
 };
 
+// autocomplete logic
+$("#start-input").autocomplete({
+    source: airportList,
+    minLength: 3,
+    select: function (event, ui) {
+      var value = ui.item.value;
+      $("#start-input").attr("code",value.substr(0,3));
+    }
+});
 
 database.ref("resultsPlace").on("child_added", function(snapshot) {
 

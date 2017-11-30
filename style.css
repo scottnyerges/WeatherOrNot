@@ -3,16 +3,16 @@
 
 
 .jumbotron{
-	position: relative;
-	z-index: -101;
-	height:450px;
-	color:white;
+        position: relative;
+        z-index: -101;
+        height:450px;
+        color:white;
 }
 .page-header{
         margin-top: 100px;
 }
 #video-background{
-		position: fixed;
+                position: fixed;
         top: 0;
         right: 0;
         left: 0;
@@ -24,9 +24,14 @@
 }
 
 .backgroundColor{
-	background-color: white;
+        background-color: white;
 }
 
+<<<<<<< HEAD
 tr{
         cursor: pointer;
+=======
+#containStyle {
+        
+>>>>>>> integration
 }
