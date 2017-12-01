@@ -2,7 +2,7 @@
 */
 .wrapper {
 display: grid;
-grid-gap: 10px;
+grid-gap: 20px;
 grid-template-areas:
 "searchBox"
 "resultsBox"
@@ -10,6 +10,7 @@ grid-template-areas:
 "logoBox";
 background-color: ghostwhite;
 align-content: center;
+font-family: arial;
 
 }
 .searchBox {
@@ -23,18 +24,33 @@ grid-area: trending;
 }
 .logoBox {
 grid-area: logo;
+float: left;
 }
 #logoStyle {
-background-color: lightgray;
+text-align: center;
 }
 #trendingStyle {
-background-color: lightgray;
+	height: 40px;
+	padding: 10px;
+	font-size: 20px;
+	margin-bottom: 5px;
+	background-color: #5c93c1;
+	font-family: courier;
+	font-size: 20px;
+	color: white;
+	text-align: center;
 }
 
 #resultHeadStyle {
+	height: 40px;
+	padding: 10px;
 	font-size: 20px;
 	margin-bottom: 5px;
-	background-color: ivory;
+	background-color: #5c93c1;
+	font-family: courier;
+	font-size: 20px;
+	color: white;
+	text-align: center;
 
 
 
