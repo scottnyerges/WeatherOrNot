@@ -1,6 +1,3 @@
-
-
-
 // firebase access
 var config = {
     apiKey: "AIzaSyDs0DhM5MNy7Ztge5tqW17NH6ipbgsyCHI",
@@ -9,10 +6,10 @@ var config = {
     projectId: "weatherornot-95c09",
     storageBucket: "weatherornot-95c09.appspot.com",
     messagingSenderId: "477066938219"
-  };
-  firebase.initializeApp(config);
+};
+firebase.initializeApp(config);
 
-  var database = firebase.database();
+var database = firebase.database();
 
 
 
@@ -25,10 +22,10 @@ var fDestination;
 var fPrice;
 var wTemp;
 var wDestination;
-var i = 0;  
+var i = 0;
 var fCount;
 var currentTime = moment().format('YYYY-MM-DD');
-var maxTime = moment().add('days',16).format('YYYY-MM-DD');
+var maxTime = moment(uEndDate).add('days', 16).format('YYYY-MM-DD');
 
 // when btn pressed, take values from inputs and set global
 // variable values to them
@@ -48,45 +45,43 @@ $("#add-user").on("click", function() {
     console.log(currentTime);
     console.log(maxTime);
 
-  
-    
 
-    if(uStartDate < currentTime){
+
+
+    if (uStartDate < currentTime) {
         console.log("invalid_response");
         $("#invalidStart").html("<h5>Invalid Date, You are not a time traveler!</h5>");
 
     }
-    if(uEndDate > maxTime){
+    if (uEndDate > maxTime) {
         console.log("too far out");
         $("#invalidEnd").html("<h5>Too Far Out!</h5>");
-    }
-    else if((currentTime == uStartDate) || (uStartDate >= currentTime)){
-        
+    } else if ((currentTime == uStartDate) || (uStartDate >= currentTime)) {
+
         $("#invalidStart").html("");
         $("#invalidEnd").html("");
 
-    // set i=0 so it starts over if you enter another query
-    i = 0;
+        // set i=0 so it starts over if you enter another query
+        i = 0;
 
-    // run the get flights function
-    getFlights();
+        // run the get flights function
+        getFlights();
 
 
-    // clears out the input fields after button click
-    $("#start-input").val("");
-    $("#temp-input").val("");
-    $("#departure-input").val("");
-    $("#return-input").val("");
+        // clears out the input fields after button click
+        $("#start-input").val("");
+        $("#temp-input").val("");
+        $("#departure-input").val("");
+        $("#return-input").val("");
 
-}
+    }
 
 });
 
-// this is the token for the SABRE API - it may expire, then ill update this one
-// maybe later we add functionality to get a token on page load 
-// or check if the token is valid and if not, get a new token
-// and update the token var
-var fToken = "T1RLAQLuUHKwziVrJzyrWyxSGPbkiXPThRCi0r29HTuRf7JArSIvWJPMAADAY9bIMT47oSV/sUjpVvfcJ6Tl5ElS2XK6N8zNU3qIHguH0X/TRCMZM3OHaYGMyHqws/fxTqS8Ne2k7IyhtIyUXYFO5Y43i8mdw4KwjoZQxF8c/HbOAPwz2RzyjhJV8osxpR0dd7Y1c7r1Mv0VQ0IBGOsaYq602SDu7s0Mq9rHSwn5YvVawqqEBk7JCrLwRyPATF6g33hURbpDgE05Grhp5dGrsyLSWEKhBM5zglu51ST3SGseNEV8m1LSUOhPxj6u";
+// this is the token for the SABRE API - it expires after a week
+// last updated 12/1 at ~1PM
+// updateToken func will update it after we learn some more stuff next week
+var fToken = "T1RLAQLQDpZExMQ8njfs6FuE16gPgc9FvxClRrdI97fwm0cImf/njSuCAADAZ2AqvxWIqAH/Gz0YBbUnUZmwq/EH3cfRIYwIMFuWfM9u0J2a6lDDOBJjgX33SAqX33yz1uP8+rz4oK7HI9RFoyH3YRNu6el8fODalFEICfWnucy61a2skGGTdG84Gw3ge4f0NrMDU8TBqNPXZ34fhEFagwQ76vSZdR8vVN+1f2KzpEek+doquHiiUXFI1Xeo2kv9MjwlnZHvgpmu0PKYu+A4q94/8eJiqGOnXz91K7Jk5ac2awou9hwMNzKeT1vJ";
 
 
 //the function to call the sabre api
@@ -108,26 +103,33 @@ function getFlights() {
         .done(function(fResponse) {
             console.log("running getFlights");
 
+            //  if we get invalid creds error,then run the updateToken function, 
+            // which updates ccreds then runs getFlights again
+            if (fResponse.message == "Authentication failed due to invalid credentials") {
+                alert("Authorization error. Getting you a new token!");
+                updateToken();
+            } else {
 
-            var fResults = fResponse.FareInfo;
-            //determine how many flights we got back
-            fCount = fResults.length;
-            console.log(fResults);
-            console.log(fCount);
+                var fResults = fResponse.FareInfo;
+                //determine how many flights we got back
+                fCount = fResults.length;
+                console.log(fResults);
+                console.log(fCount);
 
-            console.log(fResults[i].DestinationLocation);
-            //set the global flight destination var to the dest of whatever 
-            //flight result we're on
-            fDestination = fResults[i].DestinationLocation;
+                console.log(fResults[i].DestinationLocation);
+                //set the global flight destination var to the dest of whatever 
+                //flight result we're on
+                fDestination = fResults[i].DestinationLocation;
 
-            console.log(fResults[i].LowestFare.Fare);
-            //set the global flight price var to the dest of whatever 
-            //flight result we're on
-            fPrice = fResults[i].LowestFare.Fare;
-            // 	console.log(fResults[0].LowestFare.AirlineCodes);
+                console.log(fResults[i].LowestFare.Fare);
+                //set the global flight price var to the dest of whatever 
+                //flight result we're on
+                fPrice = fResults[i].LowestFare.Fare;
+                //  console.log(fResults[0].LowestFare.AirlineCodes);
 
-            //at the end of the flights func, we kick off getTemps func
-            getTemps();
+                //at the end of the flights func, we kick off getTemps func
+                getTemps();
+            }
         });
 
 };
@@ -156,14 +158,14 @@ function getTemps() {
             i++;
             console.log(i);
             if (wTemp - 7 < uTemp && uTemp < wTemp + 7) {
-         
-                
-                	var newRow = $(`
+
+
+                var newRow = $(`
 
         <tr>
-        	<td scope=row class="trending">${wDestination}</td>
-			
-        	<td class="trending_temp">${wTemp} F</td>
+            <td scope=row class="trending">${wDestination}</td>
+            
+            <td class="trending_temp">${wTemp} F</td>
             <td>${uStartDate}</td>
             <td>${uEndDate}</td>
             <td>$${fPrice}</td>
@@ -171,13 +173,13 @@ function getTemps() {
       </tr>
         `);
                 $("#results").append(newRow);
-                newRow.click(function(){
-                	var a = $(this).find("a") //.click();
-                	console.log(a.attr("href"));
-                	window.open(a.attr('href'), '_blank');
+                newRow.click(function() {
+                    var a = $(this).find("a") //.click();
+                    console.log(a.attr("href"));
+                    window.open(a.attr('href'), '_blank');
 
 
-                	var $row = $(this).closest("tr");   
+                    var $row = $(this).closest("tr");
                     var place = $row.find(".trending").text();
                     var temp = $row.find(".trending_temp").text();
 
@@ -187,12 +189,12 @@ function getTemps() {
                     var trendingT = temp;
                     var recentP = place;
                     var recentT = temp;
-                    
+
                     database.ref("resultsPlace").push({
-                        
+
                         trendingP: trendingP,
 
-                        });
+                    });
 
                     database.ref("resultsTemp").push({
 
@@ -212,7 +214,7 @@ function getTemps() {
 
                     })
 
-                    
+
                 })
 
             };
@@ -226,57 +228,80 @@ function getTemps() {
 
 // autocomplete logic
 $("#start-input").autocomplete({
+    // look at the airportList var, which is in the airport-list.js file cuz it was so long
     source: airportList,
+    //don't start autocompleting until after 3 chars entered
     minLength: 3,
-    select: function (event, ui) {
-      var value = ui.item.value;
-      $("#start-input").attr("code",value.substr(0,3));
+    //when you click an option, it fills the input field wth that
+    select: function(event, ui) {
+        var value = ui.item.value;
+    // then take the first 3 letters of that string and give that element a new attr with that code
+        $("#start-input").attr("code", value.substr(0, 3));
     }
 });
 
+//session expires after 1 week. 
+// this function SHOULD call their auth api and get a new token, but the browser won't allow it
+// waiting til next week when we cover server stuff
+// function updateToken() {
+//     var tQueryURL = "https://api-crt.cert.havail.sabre.com/v2/auth/token";
+
+//     $.ajax({
+//             method: "POST",
+//             beforeSend: function(request) {
+//                 request.setRequestHeader("Authorization", "Basic VmpFNk0ydGxiR1oxWkRocmFHa3hNMmgyWXpwRVJWWkRSVTVVUlZJNlJWaFU6VjBOaVVIZ3haamM9");
+//                 request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+//                 request.setRequestHeader("grant_type", "client_credentials")
+//             },
+//             url: tQueryURL
+//         })
+//         .done(function(tResponse) {
+//             console.log("running updateToken");
+//             // update the token var with the new token
+//             fToken = tResponse.access_token;
+//             getFlights();
+//         })
+// };
+
+
 database.ref("resultsPlace").on("child_added", function(snapshot) {
 
-        console.log(snapshot.val().trendingP);
+    console.log(snapshot.val().trendingP);
 
-    },function(errorObject) {
-      console.log("The read failed: " + errorObject.code);
-    });
+}, function(errorObject) {
+    console.log("The read failed: " + errorObject.code);
+});
 
 database.ref("resultsTemp").on("child_added", function(snapshot) {
 
-        // console.log(snapshot.val().minutesAway);
-        console.log(snapshot.val().trendingT);
+    // console.log(snapshot.val().minutesAway);
+    console.log(snapshot.val().trendingT);
 
 
-    },function(errorObject) {
-      console.log("The read failed: " + errorObject.code);
-    });
+}, function(errorObject) {
+    console.log("The read failed: " + errorObject.code);
+});
 
-database.ref("recentPlace" ).on('value', function(snapshot) {
+database.ref("recentPlace").on('value', function(snapshot) {
 
-        console.log(snapshot.val().recentP);
+    console.log(snapshot.val().recentP);
 
-        var recentSearchP = $("<h2>" + snapshot.val().recentP + "</h2>");
-        $("#trendingPlace").html(recentSearchP);
+    var recentSearchP = $("<h2>" + snapshot.val().recentP + "</h2>");
+    $("#trendingPlace").html(recentSearchP);
 
 
-    },function(errorObject) {
-      console.log("The read failed: " + errorObject.code);
-    }); 
+}, function(errorObject) {
+    console.log("The read failed: " + errorObject.code);
+});
 
 
 database.ref("recentTemp").on('value', function(snapshot) {
 
-        console.log(snapshot.val().recentT);
+    console.log(snapshot.val().recentT);
 
-        var recentSearchT = $("<h2>" + snapshot.val().recentT + "</h2>");
-        $("#trendingTemp").html(recentSearchT);
- 
-    },function(errorObject) {
-      console.log("The read failed: " + errorObject.code);
-    });
+    var recentSearchT = $("<h2>" + snapshot.val().recentT + "</h2>");
+    $("#trendingTemp").html(recentSearchT);
 
-
-
-
-
+}, function(errorObject) {
+    console.log("The read failed: " + errorObject.code);
+});
