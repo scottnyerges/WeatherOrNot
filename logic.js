@@ -29,6 +29,7 @@ var i = 0;
 var fCount;
 var currentTime = moment().format('YYYY-MM-DD');
 var maxTime = moment().add('days',16).format('YYYY-MM-DD');
+var trendPlace;
 
 // when btn pressed, take values from inputs and set global
 // variable values to them
@@ -36,7 +37,6 @@ $("#add-user").on("click", function() {
     event.preventDefault();
     origin = $("#start-input").attr("code");
     uTemp = $("#temp-input").val().trim();
-    // var wTemp = [];
     uStartDate = $("#departure-input").val().trim();
     uEndDate = $("#return-input").val().trim();
 
@@ -237,6 +237,8 @@ $("#start-input").autocomplete({
 database.ref("resultsPlace").on("child_added", function(snapshot) {
 
         console.log(snapshot.val().trendingP);
+        console.log(snapshot.key);
+        
 
     },function(errorObject) {
       console.log("The read failed: " + errorObject.code);
@@ -245,7 +247,7 @@ database.ref("resultsPlace").on("child_added", function(snapshot) {
 database.ref("resultsTemp").on("child_added", function(snapshot) {
 
         // console.log(snapshot.val().minutesAway);
-        console.log(snapshot.val().trendingT);
+        // console.log(snapshot.val().trendingT);
 
 
     },function(errorObject) {
