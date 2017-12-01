@@ -238,12 +238,9 @@ database.ref("resultsPlace").on("child_added", function(snapshot) {
 
         console.log(snapshot.val().trendingP);
 
-
-
     },function(errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
-
 
 database.ref("resultsTemp").on("child_added", function(snapshot) {
 
@@ -255,17 +252,12 @@ database.ref("resultsTemp").on("child_added", function(snapshot) {
       console.log("The read failed: " + errorObject.code);
     });
 
-
-
-
 database.ref("recentPlace" ).on('value', function(snapshot) {
 
         console.log(snapshot.val().recentP);
 
         var recentSearchP = $("<h2>" + snapshot.val().recentP + "</h2>");
         $("#trendingPlace").html(recentSearchP);
-        
-
 
 
     },function(errorObject) {
@@ -279,12 +271,12 @@ database.ref("recentTemp").on('value', function(snapshot) {
 
         var recentSearchT = $("<h2>" + snapshot.val().recentT + "</h2>");
         $("#trendingTemp").html(recentSearchT);
-        
-
-
-
+ 
     },function(errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
+
+
+
 
 
