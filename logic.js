@@ -27,9 +27,8 @@ var wTemp;
 var wDestination;
 var i = 0;  
 var fCount;
-
-
-
+var currentTime = moment().format('YYYY-MM-DD');
+var maxTime = moment().add('days',16).format('YYYY-MM-DD');
 
 // when btn pressed, take values from inputs and set global
 // variable values to them
@@ -46,6 +45,25 @@ $("#add-user").on("click", function() {
     console.log(uTemp);
     console.log(uStartDate);
     console.log(uEndDate);
+    console.log(currentTime);
+    console.log(maxTime);
+
+  
+    
+
+    if(uStartDate < currentTime){
+        console.log("invalid_response");
+        $("#invalidStart").html("<h5>Invalid Date, You are not a time traveler!</h5>");
+
+    }
+    if(uEndDate > maxTime){
+        console.log("too far out");
+        $("#invalidEnd").html("<h5>Too Far Out!</h5>");
+    }
+    else if((currentTime == uStartDate) || (uStartDate >= currentTime)){
+        
+        $("#invalidStart").html("");
+        $("#invalidEnd").html("");
 
     // set i=0 so it starts over if you enter another query
     i = 0;
@@ -60,7 +78,7 @@ $("#add-user").on("click", function() {
     $("#departure-input").val("");
     $("#return-input").val("");
 
-
+}
 
 });
 
@@ -220,12 +238,9 @@ database.ref("resultsPlace").on("child_added", function(snapshot) {
 
         console.log(snapshot.val().trendingP);
 
-
-
     },function(errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
-
 
 database.ref("resultsTemp").on("child_added", function(snapshot) {
 
@@ -237,17 +252,12 @@ database.ref("resultsTemp").on("child_added", function(snapshot) {
       console.log("The read failed: " + errorObject.code);
     });
 
-
-
-
 database.ref("recentPlace" ).on('value', function(snapshot) {
 
         console.log(snapshot.val().recentP);
 
         var recentSearchP = $("<h2>" + snapshot.val().recentP + "</h2>");
         $("#trendingPlace").html(recentSearchP);
-        
-
 
 
     },function(errorObject) {
@@ -261,12 +271,12 @@ database.ref("recentTemp").on('value', function(snapshot) {
 
         var recentSearchT = $("<h2>" + snapshot.val().recentT + "</h2>");
         $("#trendingTemp").html(recentSearchT);
-        
-
-
-
+ 
     },function(errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
+
+
+
 
 
