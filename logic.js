@@ -268,12 +268,21 @@ database.ref("resultsPlace").on("child_added", function(snapshot) {
 
         console.log(snapshot.val().trendingP);
         console.log(snapshot.key);
+
+
         
    
 
 }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
 });
+
+database.ref('resultsPlace').on("value", function(snapshot){
+
+    console.log(snapshot.numChildren());
+})
+
+
 
 database.ref("resultsTemp").on("child_added", function(snapshot) {
 
