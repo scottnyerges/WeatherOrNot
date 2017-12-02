@@ -92,6 +92,10 @@ border-color: black;
 border-style: solid;
 border-width: 1px;
 }
+.img-responsive {
+	height: 50px;
+	text-align: center;
+}
 }
 @media (min-width: 481px) and (max-width: 767px) {
 
