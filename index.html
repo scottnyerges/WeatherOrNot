@@ -1,5 +1,3 @@
-
-<!-- UPLOADED BY SCOTT AT 14:00 -->
 <!DOCTYPE html>
 <html>
   <!-- HEAD CODE -->
@@ -7,92 +5,108 @@
     <meta charset="UTF-8">
     <!-- PAGE TITLE -->
     <title>WEATHER OR NOT</title>
-   <!-- favicon -->
-  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-
-
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <!-- AJAX -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- jQuery UI - needed for autocomplete -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- link to moment.js -->
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/moment.min.js"></script>
     <!-- FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
     <!-- GOOGLE FONTS -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat|Oswald|Saira+Semi+Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:400,600" rel="stylesheet">
     <!-- RESPONSIVE DESIGN -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <!-- CSS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css" type="text/css">
     <!-- CSS RESET -->
     <link rel="stylesheet" href="reset.css" type="text/css">
   </head>
+  <!-- BEGIN THE BODY -->
   <body>
-    <!-- ONE WRAPPER TO BIND THEM ALL -->
-    <div class="wrapper" id="wrapStyle">
-      <!-- ROW FOR LOGO -->
-      <div class="logo" id="logoStyle">
-        <!-- title logo is here. Set 150 so that it doesn't go too far down the page. Need to figure out how to redo the image so that when mobile is done it moves along with it. Tried adjusting the @media with no luck. -->
-          <img src="images/title_logo.png" height="150" class="img-responsive">
+    <!-- OPEN THE CONTAINER -->
+    <div class="container">
+      <!-- HEADER -->
+      <div class="column">
+        <!-- LOGO -->
+        <img src="images/title_logo.png" id="imgStyle">
       </div>
-      <!-- THIS IS THE CONTENT BOX -->
-      <div class="search" id="searchStyle">
-      <!-- THIS IS A HEADER FOR THE SEARCH BOX -->
-
-
-        <div class="resultHead" id="resultHeadStyle">Get Me Outta Here!</div>
-        <!-- THIS IS THE INPUT FORM -->
-        <form>
-          <div class="form-group">
-            <label for="start-input">Your City: </label>
-            <input class="form-control" id="start-input" type="text">
-          </div>
-          <div class="form-group">
-            <label for="temp-input">Temperature: </label>
-            <input class="form-control" id="temp-input" type="number">
-          </div>
-          <div class="form-group">
-            <label for="departure-input">Departing: </label>
-            <input class="form-control" id="departure-input" type="Date">
-          </div>
-          <div class="form-group">
-            <label for="return-input">Returning: </label>
-            <input class="form-control" id="return-input" type="Date"></textarea>
-          </div>
-          <button class="btn btn-danger" id="add-user" type="submit">Submit</button>
-        </form>
-      </div>
-      <!-- THIS IS A BOX TO DISPLAY FIREBASE DATA (trending/most recent search) -->
-      <div class="trending" id="trendingStyle">MOST RECENT BOOKED or TRENDING TRAVEL</div>
-      <!-- RESULTS TABLE -->
-      <div class="results" id="resultStyle">
-        <!-- THIS IS A HEADER FOR THE RESULTS TABLE -->
-        <div class="resultHead" id="resultHeadStyle">Your Search Results</div>
-        <div class="tableSpace">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>City</th>
-                <th>Temp</th>
-                <th>Depart</th>
-                <th>Return</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody id="results">
-            </tbody>
-          </table>
+      <!-- SEARCH FIELD -->
+      <div class="column">
+        <!-- THIS IS A HEADER FOR THE SEARCH FIELD -->
+        <div class="resultHead" id="resultHeadStyle">GET ME OUTTA HERE!
         </div>
+        <!-- THIS IS THE INPUT FORM -->
+          <form>
+                <div class="form-group">
+                  <label for="start-input">Your City: </label>
+                  <input class="form-control" id="start-input" type="text">
+                </div>
+                <div class="form-group">
+                  <label for="temp-input">Temperature: </label>
+                  <input class="form-control" id="temp-input" type="number">
+                </div>
+                <div class="form-group">
+                  <label for="departure-input">Departing: </label>
+                  <input class="form-control" id="departure-input" type="Date">
+                  <div id="invalidStart"></div>
+                </div>
+                <div class="form-group">
+                  <label for="return-input">Returning: </label>
+                  <input class="form-control" id="return-input" type="Date"></textarea>
+                  <div id="invalidEnd"></div>
+                </div>
+                <button class="btn btn-danger" id="add-user" type="submit">Submit</button>
+              </form>
       </div>
-      <!-- THIS CLOSES THE WRAPPER -->
+      
+      <!-- TRENDING BOX -->
+      <div class="column">
+        <!-- THIS IS A BOX TO DISPLAY FIREBASE DATA -->
+        <div class="trending" id="trendingStyle">TRENDING TRAVEL</div>
+        <div id="trendingPlace"></div>
+        <div id="trendingTemp"></div>
+      </div>
+
+      <!-- RESULTS FIELD -->
+      <div class="column">
+        <!-- THIS IS A HEADER FOR THE RESULTS TABLE -->
+        <div class="resultHead" id="resultHeadStyle">YOUR SEARCH RESULTS
+        </div>
+        <!-- THIS IS THE RESULTS TABLE -->
+        <div class="tableSpace">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>City</th>
+                    <th>Temp</th>
+                    <th>Depart</th>
+                    <th>Return</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody id="results">
+                </tbody>
+              </table>
+            </div>  
+      </div>
+
+    <!-- CLOSE THE CONTAINER -->
     </div>
-      <!-- jQuery UI - needed for autocomplete -->
+    <!-- JQUERY UI AND JAVASCRIPT LINKS GO HERE -->
+    <!-- jQuery UI - needed for autocomplete -->
+
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+            <!-- jquery UI link -->
+            <!-- <script src="jquery-ui-bootstrap/third-party/jQuery-UI-Date-Range-Picker/js"></script> -->
             <!-- js file with giant aiport list -->
             <script src="airport-list.js"></script>
             <script type="text/javascript" src="logic.js"></script>
 
-    <!-- CLOSES OUT BODY AND HTML -->
+  <!-- CLOSE THE BODY AND HTML -->
   </body>
-
+</html>
