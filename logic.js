@@ -11,8 +11,6 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-
-
 // declare some global variables so we can change em with functions
 var origin = "DFW";
 var uTemp = 60;
@@ -137,7 +135,7 @@ function getFlights() {
 function getTemps() {
     console.log("running getTemps");
 
-    var wQueryURL = "https://api.wunderground.com/api/25befb141962c397/geolookup/conditions/q/iata:" +
+    var wQueryURL = "https://api.wunderground.com/api/e068043602e40f69/geolookup/conditions/q/iata:" +
         fDestination + ".json";
     $.ajax({
             method: "GET",
