@@ -88,7 +88,16 @@ font-family: 'Barlow Condensed', sans-serif;
   color: white;
   text-align: center;
 }
-
+#departReturnStyle {
+  height: 40px;
+  padding: 5px;
+  margin-bottom: 5px;
+  background-color: #5c93c1;
+font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  color: white;
+  text-align: center;
+}
 .ftr {
   height: 40px;
   padding: 5px;
@@ -118,10 +127,6 @@ font-family: 'Barlow Condensed', sans-serif;
   .trending {
     margin-top: 10px;
     margin-bottom: 10px;
-  }
-  .table{
-    font-size: 12px;
-    width: 100%;
   }
 
   .ftr{
