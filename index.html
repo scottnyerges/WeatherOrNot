@@ -71,15 +71,30 @@
               </form>
             </div>
             <div class="col-md-3">
-        <!-- THIS IS A BOX TO DISPLAY FIREBASE DATA -->
-                <div class="trending" id="trendingStyle">TRENDING TRAVEL</div>
+      <!-- TRENDING BOX -->
+                <div class="trending" id="trendingStyle">MOST RECENT TRAVEL</div>
                 <div id="trendingPlace"></div>
                 <div id="trendingTemp"></div>
                 </div>
                 </div>
               </div>
- 
-      <!-- TRENDING BOX -->
+<!-- Display for departure and arrival -->
+        <div class = "col-md-12">
+        <div class="departReturnHead" id = "departReturnStyle">TRAVEL SEARCH CRITERIA</div>
+          <div class="tableDepartReturn">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Departure</th>
+                    <th>Return</th>
+                  </tr>
+                </thead>
+                <tbody id="results">
+                <td></td>
+                <td></td>
+                </tbody>
+              </table>
+            </div>  
       
 
       <!-- RESULTS FIELD -->
@@ -94,8 +109,6 @@
                   <tr>
                     <th>City</th>
                     <th>Temp</th>
-                    <th>Depart</th>
-                    <th>Return</th>
                     <th>Price</th>
                   </tr>
                 </thead>
@@ -103,8 +116,6 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
-                <td><span class="dollars"></span></td>
                 </tbody>
               </table>
             </div>  
