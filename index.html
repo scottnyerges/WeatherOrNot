@@ -31,18 +31,25 @@
     <!-- OPEN THE CONTAINER -->
     <div class="container">
       <!-- HEADER -->
-      <div class="column">
-        <!-- LOGO -->
+<!--       <div class="column">
+ -->        
+    <div id="header" class="col-md-12">
+      <!-- LOGO -->
         <img src="images/title_logo.png" id="imgStyle">
       </div>
       <!-- SEARCH FIELD -->
       <div class="column">
         <!-- THIS IS A HEADER FOR THE SEARCH FIELD -->
-        <div class="resultHead" id="resultHeadStyle">GET ME OUTTA HERE!
-        </div>
+
+        <div id="resultBox" class="container">
+          <div class="row">
+            <div class="col-md-9">
+          <div class="resultHead" id="resultHeadStyle">
+          GET ME OUTTA HERE!
+          </div>
         <!-- THIS IS THE INPUT FORM -->
           <form>
-                <div class="form-group">
+              <div class="form-group">
                   <label for="start-input">Your City: </label>
                   <input class="form-control" id="start-input" type="text">
                 </div>
@@ -62,18 +69,21 @@
                 </div>
                 <button class="btn btn-danger" id="add-user" type="submit">Submit</button>
               </form>
-      </div>
-      
-      <!-- TRENDING BOX -->
-      <div class="column">
+            </div>
+            <div class="col-md-3">
         <!-- THIS IS A BOX TO DISPLAY FIREBASE DATA -->
-        <div class="trending" id="trendingStyle">TRENDING TRAVEL</div>
-        <div id="trendingPlace"></div>
-        <div id="trendingTemp"></div>
-      </div>
+                <div class="trending" id="trendingStyle">TRENDING TRAVEL</div>
+                <div id="trendingPlace"></div>
+                <div id="trendingTemp"></div>
+                </div>
+                </div>
+              </div>
+ 
+      <!-- TRENDING BOX -->
+      
 
       <!-- RESULTS FIELD -->
-      <div class="column">
+      <div class="col-md-12">
         <!-- THIS IS A HEADER FOR THE RESULTS TABLE -->
         <div class="resultHead" id="resultHeadStyle">YOUR SEARCH RESULTS
         </div>
@@ -90,6 +100,11 @@
                   </tr>
                 </thead>
                 <tbody id="results">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><span class="dollars"></span></td>
                 </tbody>
               </table>
             </div>  
@@ -97,6 +112,7 @@
 
     <!-- CLOSE THE CONTAINER -->
     </div>
+    <div class="ftr">© 2017 Michael Balagia, Jon Smiley, Scott Nyerges, Holly Livingston</div>
     <!-- JQUERY UI AND JAVASCRIPT LINKS GO HERE -->
     <!-- jQuery UI - needed for autocomplete -->
 
