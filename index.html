@@ -31,12 +31,14 @@
     <!-- OPEN THE CONTAINER -->
     <div class="container">
       <!-- HEADER -->
+      <div class="column fourth"></div>
       <div class="column">
         <!-- LOGO -->
         <img src="images/title_logo.png" id="imgStyle">
       </div>
+      <div class="column fourth"></div>
       <!-- SEARCH FIELD -->
-      <div class="column">
+      <div class="column half">
         <!-- THIS IS A HEADER FOR THE SEARCH FIELD -->
         <div class="resultHead" id="resultHeadStyle">GET ME OUTTA HERE!
         </div>
@@ -60,20 +62,12 @@
                   <input class="form-control" id="return-input" type="Date"></textarea>
                   <div id="invalidEnd"></div>
                 </div>
-                <button class="btn btn-danger" id="add-user" type="submit">Submit</button>
+                <button class="btn btn-danger" id="add-user" type="submit">SUBMIT</button>
               </form>
-      </div>
-      
-      <!-- TRENDING BOX -->
-      <div class="column">
-        <!-- THIS IS A BOX TO DISPLAY FIREBASE DATA -->
-        <div class="trending" id="trendingStyle">TRENDING TRAVEL</div>
-        <div id="trendingPlace"></div>
-        <div id="trendingTemp"></div>
       </div>
 
       <!-- RESULTS FIELD -->
-      <div class="column">
+      <div class="column half">
         <!-- THIS IS A HEADER FOR THE RESULTS TABLE -->
         <div class="resultHead" id="resultHeadStyle">YOUR SEARCH RESULTS
         </div>
@@ -94,6 +88,19 @@
               </table>
             </div>  
       </div>
+
+    <!-- TRENDING BOX -->
+     <div class="column third"></div>
+      <div class="column third">
+        <!-- THIS IS A BOX TO DISPLAY FIREBASE DATA -->
+        <div class="trending" id="trendingStyle">TRENDING TRAVEL</div>
+        <div class="cityTempStyle">
+        <div id="trendingPlace"></div>
+        <div id="trendingTemp"></div>
+      </div>
+      <div class="column third"></div>
+      </div>
+
 
     <!-- CLOSE THE CONTAINER -->
     </div>
