@@ -5,6 +5,7 @@
   box-sizing: border-box;
 }*/
 
+<<<<<<< HEAD:style2.css
 <<<<<<< HEAD
 .container {
   margin: 10px auto;
@@ -14,6 +15,13 @@
   margin: 0 auto;
   max-width: 480px;
 >>>>>>> 4832438f2262813fd5b573dc1a6fb2c6784446c0
+=======
+
+/*.container {
+  margin: 0 auto;
+  max-width: 480px;
+
+>>>>>>> 7c31df0bea8e0bae96bb8560f67c02f3df29b603:style.css
   width: 90%;
   background-color: aliceblue;
   padding: 5px;
@@ -118,11 +126,14 @@ font-family: 'Barlow Condensed', sans-serif;
   text-align: center;
 }
 
+<<<<<<< HEAD:style2.css
 <<<<<<< HEAD
 .cityTempStyle {
   font-size: 20px;
   text-align: center;
 =======
+=======
+>>>>>>> 7c31df0bea8e0bae96bb8560f67c02f3df29b603:style.css
 @media screen and (max-width: 640px) {
   body {
   background-image: url("images/Logo_blue_mobile.png");
@@ -146,7 +157,11 @@ font-family: 'Barlow Condensed', sans-serif;
   .ftr{
     font-size: 14px;
   }
+<<<<<<< HEAD:style2.css
 >>>>>>> 4832438f2262813fd5b573dc1a6fb2c6784446c0
+=======
+
+>>>>>>> 7c31df0bea8e0bae96bb8560f67c02f3df29b603:style.css
 }
 
 .clearfix:before,
