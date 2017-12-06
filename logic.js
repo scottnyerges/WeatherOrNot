@@ -12,8 +12,6 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 
-
-
 // declare some global variables so we can change em with functions
 var origin = "DFW";
 var uTemp = 60;
@@ -29,31 +27,8 @@ var currentTime = moment().format('YYYY-MM-DD');
 var trendPlace;
 var maxTime = moment(uEndDate).add('days', 16).format('YYYY-MM-DD');
 var trendingCount = 0 ;
-var prevCount = 0;
 var currentSel = "Dallas/Ft Worth, Texas";
 
-
-// this ensures that the prevCount is always the what the prevCount is from Firebase
-// ----------------------------------------------------------------------------------
-// database.ref("recentCount").set({
-//     prevCount: prevCount,
-//     });
-
-// database.ref("recentCount").on("value", function(snapshot){
-
-//     prevCount = snapshot.val().prevCount;
-//     console.log(prevCount);
-//     });
-
-// database.ref("topTrending").set({
-//     currentSel: currentSel,
-//     });
-
-// database.ref("topTrending").on("value", function(snapshot){
-//     currentSel = snapshot.val().currentSel;
-//     console.log(currentSel);
-//     });
-// ------------------------------------------------------------------------------------
 
 
 // when btn pressed, take values from inputs and set global
@@ -298,119 +273,65 @@ database.ref("recentPlace").on('value', function(snapshot) {
 });
 
 // --------------------------------------------------------------------------------------
-// this is the possible trending function
+// this is the trending function
+// whenever a place is selected, that place is matched with an array of recently clicked places
 
 
-// database.ref("recentPlace").on('value', function(snapshot) {    
-//     var tempSel = snapshot.val().recentP;
+
+database.ref("recentPlace").on('value', function(snapshot) {    
+
+    var tempSel = snapshot.val().recentP;
    
-// database.ref('resultsPlace').on("child_added", function(snapshot){
+database.ref('resultsPlace').on("child_added", function(snapshot){
 
+// if the currently selected place matches previously selected places then it adds a point to the trending count
+
+    for(var i = 0; i < snapshot.numChildren(); i++){
+        if(tempSel == snapshot.val().trendingP){
+            trendingCount += 1;
+        }
+
+        if(tempSel != snapshot.val().trendingP){
+
+        }
+
+    };
+    });
     
+        console.log("this is the count after loop " + trendingCount);
+// if the trending count is greater than zero than it pushes the trending count and place into firebase
 
-// // the current selection will see if it matches with the current selection 
-// // it there is a match it will log a point 
-
-//     for(var i = 0; i < snapshot.numChildren(); i++){
-//         console.log(snapshot.val().trendingP);
-//         if(tempSel == snapshot.val().trendingP){
-//             console.log("match");
-//             trendingCount += 1;
-//             console.log(trendingCount);
-//             console.log(prevCount);
+        if((trendingCount > 0)){
+            currentSel = tempSel;
+            database.ref("trendingPl").push({
+                place: currentSel,
+                count:trendingCount
+            });
             
+        }
 
-//         }
-//         if(tempSel != snapshot.val().trendingP){
-//             console.log("not a match");
+        else{
 
-//         }
+        }
+// resets the trending count 
+trendingCount = 0; 
 
-//     };
-//     });
-//         console.log("this is the count after loop " + trendingCount);
-//         console.log("this is the prevCount after the loop " + prevCount);
-        
-//         // try applying a value to the matched place and then order by child
-
-
-//         if((trendingCount > prevCount)){
-//             currentSel = tempSel;
-//             trendingCounts();
-
-//            database.ref("trendingPl").push({
-//                 place: currentSel,
-//                 count:trendingCount
-//             });
-
-    
-//         database.ref("trendingPl").orderByValue().limitToLast(1).on("value" , function(){
-
-//             console.log("trending count " + snapshot.val().place + " " + snapshot.val().count);
-
-//         });
-
-//         }
-
-//         else{
-
-//         }
-
-// // the only error I am running into is the fact that previous count will not update after a function, its not 
-// // holding on to    
-
-// function trendingCounts(count){
-//             console.log("the trending place will change");
-
-            
-//             var trendingShow = currentSel;
-//             // var trendingSearchP = $("<h2>" + trendingShow + "</h2>");
-//             // $("#trendingPlace").html(trendingShow);
-
-//             database.ref("recentCount").on('value', function(snapshot){
-//             console.log("this is the firebase log of prev counts    " + snapshot.val().prevCount);
-//             prevCount = trendingCount;
-
-   
-//             database.ref("recentCount").set({
-//                     prevCount: prevCount,
-
-//                     });
-
-//             database.ref("topTrending").set({
-//                     currentSel: currentSel,
-
-//                     });
-
-//             });   
-
-//         }
-
-// // this will reset the trendingCount everytime a place is selected
-// trendingCount = 0; 
-// console.log("trending count at the end of the function is " + trendingCount);
-// console.log("prev count at the end of the function is " + prevCount);
-
-
-// });
+});
 // ---------------------------------------------------------------------------------------------
+// will take the child with the highest value 
+// the value is the number of matches with the current selection and recent searches
+    
+database.ref("trendingPl").orderByChild("count").limitToLast(1).on("child_added" , function(snapshot){
+
+            console.log("trending place " + snapshot.val().place + snapshot.val().count);
+            console.log("test");
+
+    });
 
 database.ref("recentCount").on("value", function(snapshot){
 
        prevCount = snapshot.val().prevCount;
-       // console.log(prevCount);
     });
-
-
-
-database.ref("resultsTemp").on("child_added", function(snapshot) {
-
-
-        // console.log(snapshot.val().minutesAway);
-
-}, function(errorObject) {
-    console.log("The read failed: " + errorObject.code);
-});
 
 
 database.ref("recentTemp").on('value', function(snapshot) {
@@ -425,6 +346,7 @@ database.ref("recentTemp").on('value', function(snapshot) {
 });
 
 
-       
+
+ 
 
 
