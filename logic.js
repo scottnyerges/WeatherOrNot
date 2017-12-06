@@ -13,6 +13,7 @@ var database = firebase.database();
 
 
 
+
 // declare some global variables so we can change em with functions
 var origin = "DFW";
 var uTemp = 60;
@@ -27,6 +28,33 @@ var fCount;
 var currentTime = moment().format('YYYY-MM-DD');
 var trendPlace;
 var maxTime = moment(uEndDate).add('days', 16).format('YYYY-MM-DD');
+var trendingCount = 0 ;
+var prevCount = 0;
+var currentSel = "Dallas/Ft Worth, Texas";
+
+
+// this ensures that the prevCount is always the what the prevCount is from Firebase
+// ----------------------------------------------------------------------------------
+// database.ref("recentCount").set({
+//     prevCount: prevCount,
+//     });
+
+// database.ref("recentCount").on("value", function(snapshot){
+
+//     prevCount = snapshot.val().prevCount;
+//     console.log(prevCount);
+//     });
+
+// database.ref("topTrending").set({
+//     currentSel: currentSel,
+//     });
+
+// database.ref("topTrending").on("value", function(snapshot){
+//     currentSel = snapshot.val().currentSel;
+//     console.log(currentSel);
+//     });
+// ------------------------------------------------------------------------------------
+
 
 // when btn pressed, take values from inputs and set global
 // variable values to them
@@ -56,6 +84,7 @@ $("#add-user").on("click", function() {
     if (uEndDate > maxTime) {
         console.log("too far out");
         $("#invalidEnd").html("<h5>Too Far Out!</h5>");
+
     } else if ((currentTime == uStartDate) || (uStartDate >= currentTime)) {
 
         $("#invalidStart").html("");
@@ -137,7 +166,7 @@ function getFlights() {
 function getTemps() {
     console.log("running getTemps");
 
-    var wQueryURL = "https://api.wunderground.com/api/25befb141962c397/geolookup/conditions/q/iata:" +
+    var wQueryURL = "https://api.wunderground.com/api/e068043602e40f69/geolookup/conditions/q/iata:" +
         fDestination + ".json";
     $.ajax({
             method: "GET",
@@ -189,32 +218,28 @@ function getTemps() {
                     var trendingT = temp;
                     var recentP = place;
                     var recentT = temp;
+                    console.log("this is the selected place" + trendingP);
+
 
                     database.ref("resultsPlace").push({
 
                         trendingP: trendingP,
-
                     });
 
                     database.ref("resultsTemp").push({
 
                         trendingT: trendingT,
-
                     });
 
                     database.ref("recentPlace").set({
 
                         recentP: recentP,
-
                     })
 
                     database.ref("recentTemp").set({
 
                         recentT: recentT,
-
                     })
-
-
                 })
 
             };
@@ -264,23 +289,117 @@ $("#start-input").autocomplete({
 // };
 
 
-database.ref("resultsPlace").on("child_added", function(snapshot) {
 
-        console.log(snapshot.val().trendingP);
-        console.log(snapshot.key);
+database.ref("recentPlace").on('value', function(snapshot) {
 
+    var recentSearchP = $("<h2>" + snapshot.val().recentP + "</h2>");
+    $("#trendingPlace").html(recentSearchP);
 
-        
-   
-
-}, function(errorObject) {
-    console.log("The read failed: " + errorObject.code);
 });
 
-database.ref('resultsPlace').on("value", function(snapshot){
+// --------------------------------------------------------------------------------------
+// this is the possible trending function
 
-    console.log(snapshot.numChildren());
-})
+
+// database.ref("recentPlace").on('value', function(snapshot) {    
+//     var tempSel = snapshot.val().recentP;
+   
+// database.ref('resultsPlace').on("child_added", function(snapshot){
+
+    
+
+// // the current selection will see if it matches with the current selection 
+// // it there is a match it will log a point 
+
+//     for(var i = 0; i < snapshot.numChildren(); i++){
+//         console.log(snapshot.val().trendingP);
+//         if(tempSel == snapshot.val().trendingP){
+//             console.log("match");
+//             trendingCount += 1;
+//             console.log(trendingCount);
+//             console.log(prevCount);
+            
+
+//         }
+//         if(tempSel != snapshot.val().trendingP){
+//             console.log("not a match");
+
+//         }
+
+//     };
+//     });
+//         console.log("this is the count after loop " + trendingCount);
+//         console.log("this is the prevCount after the loop " + prevCount);
+        
+//         // try applying a value to the matched place and then order by child
+
+
+//         if((trendingCount > prevCount)){
+//             currentSel = tempSel;
+//             trendingCounts();
+
+//            database.ref("trendingPl").push({
+//                 place: currentSel,
+//                 count:trendingCount
+//             });
+
+    
+//         database.ref("trendingPl").orderByValue().limitToLast(1).on("value" , function(){
+
+//             console.log("trending count " + snapshot.val().place + " " + snapshot.val().count);
+
+//         });
+
+//         }
+
+//         else{
+
+//         }
+
+// // the only error I am running into is the fact that previous count will not update after a function, its not 
+// // holding on to    
+
+// function trendingCounts(count){
+//             console.log("the trending place will change");
+
+            
+//             var trendingShow = currentSel;
+//             // var trendingSearchP = $("<h2>" + trendingShow + "</h2>");
+//             // $("#trendingPlace").html(trendingShow);
+
+//             database.ref("recentCount").on('value', function(snapshot){
+//             console.log("this is the firebase log of prev counts    " + snapshot.val().prevCount);
+//             prevCount = trendingCount;
+
+   
+//             database.ref("recentCount").set({
+//                     prevCount: prevCount,
+
+//                     });
+
+//             database.ref("topTrending").set({
+//                     currentSel: currentSel,
+
+//                     });
+
+//             });   
+
+//         }
+
+// // this will reset the trendingCount everytime a place is selected
+// trendingCount = 0; 
+// console.log("trending count at the end of the function is " + trendingCount);
+// console.log("prev count at the end of the function is " + prevCount);
+
+
+// });
+// ---------------------------------------------------------------------------------------------
+
+database.ref("recentCount").on("value", function(snapshot){
+
+       prevCount = snapshot.val().prevCount;
+       // console.log(prevCount);
+    });
 
 
 
@@ -288,22 +407,6 @@ database.ref("resultsTemp").on("child_added", function(snapshot) {
 
 
         // console.log(snapshot.val().minutesAway);
-        // console.log(snapshot.val().trendingT);
-
-    
-
-
-}, function(errorObject) {
-    console.log("The read failed: " + errorObject.code);
-});
-
-database.ref("recentPlace").on('value', function(snapshot) {
-
-    console.log(snapshot.val().recentP);
-
-    var recentSearchP = $("<h2>" + snapshot.val().recentP + "</h2>");
-    $("#trendingPlace").html(recentSearchP);
-
 
 }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
@@ -315,8 +418,13 @@ database.ref("recentTemp").on('value', function(snapshot) {
     console.log(snapshot.val().recentT);
 
     var recentSearchT = $("<h2>" + snapshot.val().recentT + "</h2>");
-    $("#trendingTemp").html(recentSearchT);
+    $("#trendingRecent").html(recentSearchT);
 
 }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
 });
+
+
+       
+
+
