@@ -12,8 +12,6 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 
-
-
 // declare some global variables so we can change em with functions
 var origin = "DFW";
 var uTemp = 60;
