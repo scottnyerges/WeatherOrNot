@@ -141,7 +141,7 @@ function getFlights() {
 function getTemps() {
     console.log("running getTemps");
 
-    var wQueryURL = "https://api.wunderground.com/api/e068043602e40f69/geolookup/conditions/q/iata:" +
+    var wQueryURL = "https://api.wunderground.com/api/25befb141962c397/geolookup/conditions/q/iata:" +
         fDestination + ".json";
     $.ajax({
             method: "GET",
@@ -264,14 +264,6 @@ $("#start-input").autocomplete({
 // };
 
 
-
-database.ref("recentPlace").on('value', function(snapshot) {
-
-    var recentSearchP = $("<h2>" + snapshot.val().recentP + "</h2>");
-    $("#trendingPlace").html(recentSearchP);
-
-});
-
 // --------------------------------------------------------------------------------------
 // this is the trending function
 // whenever a place is selected, that place is matched with an array of recently clicked places
@@ -279,11 +271,9 @@ database.ref("recentPlace").on('value', function(snapshot) {
 
 
 database.ref("recentPlace").on('value', function(snapshot) {    
-
     var tempSel = snapshot.val().recentP;
    
 database.ref('resultsPlace').on("child_added", function(snapshot){
-
 // if the currently selected place matches previously selected places then it adds a point to the trending count
 
     for(var i = 0; i < snapshot.numChildren(); i++){
@@ -303,6 +293,7 @@ database.ref('resultsPlace').on("child_added", function(snapshot){
 
         if((trendingCount > 0)){
             currentSel = tempSel;
+
             database.ref("trendingPl").push({
                 place: currentSel,
                 count:trendingCount
@@ -323,23 +314,18 @@ trendingCount = 0;
     
 database.ref("trendingPl").orderByChild("count").limitToLast(1).on("child_added" , function(snapshot){
 
-            console.log("trending place " + snapshot.val().place + snapshot.val().count);
-            console.log("test");
+        console.log("trending place " + snapshot.val().place + snapshot.val().count);
+            var recentSearchP = $("<h2>Top Trending </h2>" + "<h2>" + snapshot.val().place + "</h2>");
+            $("#trendingPlace").html(recentSearchP);
 
     });
 
-database.ref("recentCount").on("value", function(snapshot){
 
-       prevCount = snapshot.val().prevCount;
-    });
+database.ref("recentPlace").on('value', function(snapshot) {
 
-
-database.ref("recentTemp").on('value', function(snapshot) {
-
-    console.log(snapshot.val().recentT);
-
-    var recentSearchT = $("<h2>" + snapshot.val().recentT + "</h2>");
-    $("#trendingRecent").html(recentSearchT);
+    console.log(snapshot.val().recentP);
+        var recentSearchT = $("<h2>Recently Searched </h2>" + "<h2>" + snapshot.val().recentP + "</h2>");
+        $("#recentPlace").html(recentSearchT);
 
 }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
