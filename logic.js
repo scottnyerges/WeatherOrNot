@@ -315,7 +315,7 @@ trendingCount = 0;
 database.ref("trendingPl").orderByChild("count").limitToLast(1).on("child_added" , function(snapshot){
 
         console.log("trending place " + snapshot.val().place + snapshot.val().count);
-            var recentSearchP = $("<h2>Top Trending </h2>" + "<h2>" + snapshot.val().place + "</h2>");
+            var recentSearchP = $("<h2>" + snapshot.val().place + "</h2>");
             $("#trendingPlace").html(recentSearchP);
 
     });
@@ -324,7 +324,7 @@ database.ref("trendingPl").orderByChild("count").limitToLast(1).on("child_added"
 database.ref("recentPlace").on('value', function(snapshot) {
 
     console.log(snapshot.val().recentP);
-        var recentSearchT = $("<h2>Recently Searched </h2>" + "<h2>" + snapshot.val().recentP + "</h2>");
+        var recentSearchT = $("<h2>" + snapshot.val().recentP + "</h2>");
         $("#recentPlace").html(recentSearchT);
 
 }, function(errorObject) {
