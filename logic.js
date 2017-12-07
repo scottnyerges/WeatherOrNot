@@ -11,6 +11,7 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+
 // declare some global variables so we can change em with functions
 var origin = "DFW";
 var uTemp = 60;
@@ -23,7 +24,12 @@ var wDestination;
 var i = 0;
 var fCount;
 var currentTime = moment().format('YYYY-MM-DD');
+var trendPlace;
 var maxTime = moment(uEndDate).add('days', 16).format('YYYY-MM-DD');
+var trendingCount = 0 ;
+var currentSel = "Dallas/Ft Worth, Texas";
+
+
 
 // when btn pressed, take values from inputs and set global
 // variable values to them
@@ -31,7 +37,6 @@ $("#add-user").on("click", function() {
     event.preventDefault();
     origin = $("#start-input").attr("code");
     uTemp = $("#temp-input").val().trim();
-    // var wTemp = [];
     uStartDate = $("#departure-input").val().trim();
     uEndDate = $("#return-input").val().trim();
 
@@ -54,6 +59,7 @@ $("#add-user").on("click", function() {
     if (uEndDate > maxTime) {
         console.log("too far out");
         $("#invalidEnd").html("<h5>Too Far Out!</h5>");
+
     } else if ((currentTime == uStartDate) || (uStartDate >= currentTime)) {
 
         $("#invalidStart").html("");
@@ -135,7 +141,7 @@ function getFlights() {
 function getTemps() {
     console.log("running getTemps");
 
-    var wQueryURL = "https://api.wunderground.com/api/e068043602e40f69/geolookup/conditions/q/iata:" +
+    var wQueryURL = "https://api.wunderground.com/api/25befb141962c397/geolookup/conditions/q/iata:" +
         fDestination + ".json";
     $.ajax({
             method: "GET",
@@ -187,32 +193,28 @@ function getTemps() {
                     var trendingT = temp;
                     var recentP = place;
                     var recentT = temp;
+                    console.log("this is the selected place" + trendingP);
+
 
                     database.ref("resultsPlace").push({
 
                         trendingP: trendingP,
-
                     });
 
                     database.ref("resultsTemp").push({
 
                         trendingT: trendingT,
-
                     });
 
                     database.ref("recentPlace").set({
 
                         recentP: recentP,
-
                     })
 
                     database.ref("recentTemp").set({
 
                         recentT: recentT,
-
                     })
-
-
                 })
 
             };
@@ -262,44 +264,75 @@ $("#start-input").autocomplete({
 // };
 
 
-database.ref("resultsPlace").on("child_added", function(snapshot) {
+// --------------------------------------------------------------------------------------
+// this is the trending function
+// whenever a place is selected, that place is matched with an array of recently clicked places
 
-    console.log(snapshot.val().trendingP);
 
-}, function(errorObject) {
-    console.log("The read failed: " + errorObject.code);
+
+database.ref("recentPlace").on('value', function(snapshot) {    
+    var tempSel = snapshot.val().recentP;
+   
+database.ref('resultsPlace').on("child_added", function(snapshot){
+// if the currently selected place matches previously selected places then it adds a point to the trending count
+
+    for(var i = 0; i < snapshot.numChildren(); i++){
+        if(tempSel == snapshot.val().trendingP){
+            trendingCount += 1;
+        }
+
+        if(tempSel != snapshot.val().trendingP){
+
+        }
+
+    };
+    });
+    
+        console.log("this is the count after loop " + trendingCount);
+// if the trending count is greater than zero than it pushes the trending count and place into firebase
+
+        if((trendingCount > 0)){
+            currentSel = tempSel;
+
+            database.ref("trendingPl").push({
+                place: currentSel,
+                count:trendingCount
+            });
+            
+        }
+
+        else{
+
+        }
+// resets the trending count 
+trendingCount = 0; 
+
 });
+// ---------------------------------------------------------------------------------------------
+// will take the child with the highest value 
+// the value is the number of matches with the current selection and recent searches
+    
+database.ref("trendingPl").orderByChild("count").limitToLast(1).on("child_added" , function(snapshot){
 
-database.ref("resultsTemp").on("child_added", function(snapshot) {
+        console.log("trending place " + snapshot.val().place + snapshot.val().count);
+            var recentSearchP = $("<h2>" + snapshot.val().place + "</h2>");
+            $("#trendingPlace").html(recentSearchP);
 
-    // console.log(snapshot.val().minutesAway);
-    console.log(snapshot.val().trendingT);
+    });
 
-
-}, function(errorObject) {
-    console.log("The read failed: " + errorObject.code);
-});
 
 database.ref("recentPlace").on('value', function(snapshot) {
 
     console.log(snapshot.val().recentP);
-
-    var recentSearchP = $("<h2>" + snapshot.val().recentP + "</h2>");
-    $("#trendingPlace").html(recentSearchP);
-
+        var recentSearchT = $("<h2>" + snapshot.val().recentP + "</h2>");
+        $("#recentPlace").html(recentSearchT);
 
 }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
 });
 
 
-database.ref("recentTemp").on('value', function(snapshot) {
 
-    console.log(snapshot.val().recentT);
+ 
 
-    var recentSearchT = $("<h2>" + snapshot.val().recentT + "</h2>");
-    $("#trendingTemp").html(recentSearchT);
 
-}, function(errorObject) {
-    console.log("The read failed: " + errorObject.code);
-});
