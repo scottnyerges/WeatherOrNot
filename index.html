@@ -31,127 +31,101 @@
     <!-- OPEN THE CONTAINER -->
     <div class="container">
       <!-- HEADER -->
-
-<!--       <div class="column">
- -->        
-    <div id="header" class="col-md-12">
-      <!-- LOGO -->
-
+      <div id="header" class="col-md-12">
+        <!-- LOGO -->
         <img src="images/title_logo.png" id="imgStyle">
       </div>
 
-      <div class="column fourth"></div>
-      <!-- SEARCH FIELD -->
-      <div class="column half">
-        <!-- THIS IS A HEADER FOR THE SEARCH FIELD -->
-
-        <div id="resultBox" class="container">
-          <div class="row">
-            <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-9">
           <div class="resultHead" id="resultHeadStyle">
-          GET ME OUTTA HERE!
+            GET ME OUTTA HERE!
           </div>
-        <!-- THIS IS THE INPUT FORM -->
+          <!-- THIS IS THE INPUT FORM -->
           <form>
-              <div class="form-group">
-                  <label for="start-input">Your City: </label>
-                  <input class="form-control" id="start-input" type="text">
-                </div>
-                <div class="form-group">
-                  <label for="temp-input">Temperature: </label>
-                  <input class="form-control" id="temp-input" type="number">
-                </div>
-                <div class="form-group">
-                  <label for="departure-input">Departing: </label>
-                  <input class="form-control" id="departure-input" type="Date">
-                  <div id="invalidStart"></div>
-                </div>
-                <div class="form-group">
-                  <label for="return-input">Returning: </label>
-                  <input class="form-control" id="return-input" type="Date"></textarea>
-                  <div id="invalidEnd"></div>
-                </div>
-                <button class="btn btn-danger" id="add-user" type="submit">SUBMIT</button>
-              </form>
-
+            <div class="form-group">
+              <label for="start-input">Your City: </label>
+              <input class="form-control" id="start-input" type="text">
             </div>
-            <div class="col-md-3">
-      <!-- TRENDING BOX -->
-                <div class="trending" id="trendingStyle">MOST RECENT TRAVEL</div>
-                <div id="recentPlace"></div>
-                </div>
-                </div>
-              </div>
-<!-- Display for departure and arrival -->
-        <div class = "col-md-12">
-        <div class="departReturnHead" id = "departReturnStyle">TRAVEL SEARCH CRITERIA</div>
-          <div class="tableDepartReturn">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>Departure</th>
-                    <th>Return</th>
-                  </tr>
-                </thead>
-                <tbody id="results">
-                <td></td>
-                <td></td>
-                </tbody>
-              </table>
-            </div>  
-      
-
-      <!-- RESULTS FIELD -->
-      <div class="col-md-12">
-
-        <!-- THIS IS A HEADER FOR THE RESULTS TABLE -->
-        <div class="resultHead" id="resultHeadStyle">YOUR SEARCH RESULTS
+            <div class="form-group">
+              <label for="temp-input">Temperature: </label>
+              <input class="form-control" id="temp-input" type="number">
+            </div>
+            <div class="form-group">
+              <label for="departure-input">Departing: </label>
+              <input class="form-control" id="departure-input" type="Date">
+              <div id="invalidStart"></div>
+            </div>
+            <div class="form-group">
+              <label for="return-input">Returning: </label>
+              <input class="form-control" id="return-input" type="Date"></textarea>
+              <div id="invalidEnd"></div>
+            </div>
+            <button class="btn btn-danger" id="add-user" type="submit">SUBMIT</button>
+          </form>
         </div>
-        <!-- THIS IS THE RESULTS TABLE -->
-        <div class="tableSpace">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>City</th>
-                    <th>Temp</th>
-                    <th>Price</th>
-                  </tr>
-                </thead>
-                <tbody id="results">
-                <td></td>
-                <td></td>
-                <td></td>
-                </tbody>
-              </table>
-            </div>  
+        <div class="col-md-3">
+          <!-- TRENDING BOX -->
+          <div class="trending" id="recentStyle">MOST RECENT TRAVEL SEARCH</div>
+          <div id="recentPlace"></div>
+          <div class="trending" id="trendingStyle">TRENDING VACATION DESTINATION</div>
+          <div class="cityTempStyle">
+            <div id="trendingPlace"></div>
+            <div id="trendingTemp"></div>
+          </div>
+        </div>
+      </div>
+         <div class="row">
+      <!-- Display for departure and arrival -->
+      <div class = "col-md-12">
+        <div class="departReturnHead" id = "departReturnStyle">DEPARTURE / ARRIVAL DATES</div>
+        <div class="tableDepartReturn">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Departure</th>
+                <th>Return</th>
+              </tr>
+            </thead>
+            <tbody id="results">
+              <td></td>
+              <td></td>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-    <!-- TRENDING BOX -->
-     <div class="column third"></div>
-      <div class="column third">
-        <!-- THIS IS A BOX TO DISPLAY FIREBASE DATA -->
-        <div class="trending" id="trendingStyle">TRENDING TRAVEL</div>
-        <div class="cityTempStyle">
-        <div id="trendingPlace"></div>
-        <div id="trendingTemp"></div>
+      <div class = "col-md-12">
+        <div class="departReturnHead" id = "departReturnStyle">DREAM DESTINATION OPTIONS</div>
+        <div class="tableDepartReturn">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>City</th>
+                <th>Temp</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody id="results">
+              <td></td>
+              <td></td>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="column third"></div>
+
+
+        <!-- CLOSE THE CONTAINER -->
       </div>
+      <div class="ftr">© 2017 Michael Balagia, Jon Smiley, Scott Nyerges, Holly Livingston</div>
 
-
-    <!-- CLOSE THE CONTAINER -->
-    </div>
-    <div class="ftr">© 2017 Michael Balagia, Jon Smiley, Scott Nyerges, Holly Livingston</div>
-    <!-- JQUERY UI AND JAVASCRIPT LINKS GO HERE -->
-    <!-- jQuery UI - needed for autocomplete -->
-
-            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-            <!-- jquery UI link -->
-            <!-- <script src="jquery-ui-bootstrap/third-party/jQuery-UI-Date-Range-Picker/js"></script> -->
-            <!-- js file with giant aiport list -->
-            <script src="airport-list.js"></script>
-            <script type="text/javascript" src="logic.js"></script>
-
-  <!-- CLOSE THE BODY AND HTML -->
-  </body>
-</html>
+      <!-- jQuery UI - needed for autocomplete -->
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+      <!-- jquery UI link -->
+      <!-- <script src="jquery-ui-bootstrap/third-party/jQuery-UI-Date-Range-Picker/js"></script> -->
+      <!-- js file with giant aiport list -->
+      <script src="airport-list.js"></script>
+      <script type="text/javascript" src="logic.js"></script>
+      <!-- CLOSE THE BODY AND HTML -->
+    </body>
+  </html>
