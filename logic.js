@@ -85,7 +85,7 @@ $("#add-user").on("click", function() {
 // this is the token for the SABRE API - it expires after a week
 // last updated 12/1 at ~1PM
 // updateToken func will update it after we learn some more stuff next week
-var fToken = "T1RLAQLQDpZExMQ8njfs6FuE16gPgc9FvxClRrdI97fwm0cImf/njSuCAADAZ2AqvxWIqAH/Gz0YBbUnUZmwq/EH3cfRIYwIMFuWfM9u0J2a6lDDOBJjgX33SAqX33yz1uP8+rz4oK7HI9RFoyH3YRNu6el8fODalFEICfWnucy61a2skGGTdG84Gw3ge4f0NrMDU8TBqNPXZ34fhEFagwQ76vSZdR8vVN+1f2KzpEek+doquHiiUXFI1Xeo2kv9MjwlnZHvgpmu0PKYu+A4q94/8eJiqGOnXz91K7Jk5ac2awou9hwMNzKeT1vJ";
+var fToken = "T1RLAQIljucrG1j3XpIwO6BV6988PJPAthDaqu7kXDgL29xrugLx8ECUAADAutvU7eumJ7MjUeS94vFIObqCVD0q569VXQHkq/PzvtxAFjFEDjbKiMASefOG+NBdC9aX7Za0HaAg2TVR2WoLwuvxPGXHVhFyTEwuRniuim6uwU5js0bFPXDyyVoI9dqvarVcOXvPufb7SP+/LguW08TONDzNre8DWgDVOsBW+Kjn1D+YqBW+ly8NVICoDUDYCH7/CfqcE9jOfWxJFWMXaGnf+8FUdTqb5BD4jsULk/nic8M6+DIgmN2X3rhWmAHS";
 
 
 //the function to call the sabre api
@@ -141,7 +141,7 @@ function getFlights() {
 function getTemps() {
     console.log("running getTemps");
 
-    var wQueryURL = "https://api.wunderground.com/api/25befb141962c397/geolookup/conditions/q/iata:" +
+    var wQueryURL = "https://api.wunderground.com/api/5849bb5f32d4cc5d/geolookup/conditions/q/iata:" +
         fDestination + ".json";
     $.ajax({
             method: "GET",
