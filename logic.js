@@ -25,7 +25,7 @@ var i = 0;
 var fCount;
 var currentTime = moment().format('YYYY-MM-DD');
 var trendPlace;
-var maxTime = moment(uEndDate).add('days', 16).format('YYYY-MM-DD');
+var maxTime = moment(uEndDate).add(16,'days').format('YYYY-MM-DD');
 var trendingCount = 0 ;
 var currentSel = "Dallas/Ft Worth, Texas";
 
@@ -48,7 +48,10 @@ $("#add-user").on("click", function() {
     console.log(currentTime);
     console.log(maxTime);
 
-
+                $("#dates").append(`
+            <td scope=row>${uStartDate}</td>
+            <td>${uEndDate}</td>
+                    `);
 
 
     if (uStartDate < currentTime) {
@@ -61,6 +64,8 @@ $("#add-user").on("click", function() {
         $("#invalidEnd").html("<h5>Too Far Out!</h5>");
 
     } else if ((currentTime == uStartDate) || (uStartDate >= currentTime)) {
+
+
 
         $("#invalidStart").html("");
         $("#invalidEnd").html("");
@@ -83,7 +88,7 @@ $("#add-user").on("click", function() {
 });
 
 // this is the token for the SABRE API - it expires after a week
-// last updated 12/1 at ~1PM
+// last updated 12/8 at ~10AM
 // updateToken func will update it after we learn some more stuff next week
 var fToken = "T1RLAQIljucrG1j3XpIwO6BV6988PJPAthDaqu7kXDgL29xrugLx8ECUAADAutvU7eumJ7MjUeS94vFIObqCVD0q569VXQHkq/PzvtxAFjFEDjbKiMASefOG+NBdC9aX7Za0HaAg2TVR2WoLwuvxPGXHVhFyTEwuRniuim6uwU5js0bFPXDyyVoI9dqvarVcOXvPufb7SP+/LguW08TONDzNre8DWgDVOsBW+Kjn1D+YqBW+ly8NVICoDUDYCH7/CfqcE9jOfWxJFWMXaGnf+8FUdTqb5BD4jsULk/nic8M6+DIgmN2X3rhWmAHS";
 
@@ -161,6 +166,7 @@ function getTemps() {
             // and i++, then run get flights again unless we've hit the end of the flight list
             i++;
             console.log(i);
+
             if (wTemp - 7 < uTemp && uTemp < wTemp + 7) {
 
 
@@ -170,12 +176,11 @@ function getTemps() {
             <td scope=row class="trending">${wDestination}</td>
             
             <td class="trending_temp">${wTemp} F</td>
-            <td>${uStartDate}</td>
-            <td>${uEndDate}</td>
             <td>$${fPrice}</td>
             // <td> <a href="https://www.kayak.com/flights/${origin}-${fDestination}/${uStartDate}/${uEndDate}?sort=price_a" target="_blank"></a></td>            
       </tr>
         `);
+
                 $("#results").append(newRow);
                 newRow.click(function() {
                     var a = $(this).find("a") //.click();
