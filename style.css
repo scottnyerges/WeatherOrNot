@@ -8,7 +8,7 @@ body {
 }
 
 .container {
-  font-size: 22px;
+  font-size: 24px;
 font-family: 'Barlow Condensed', sans-serif;
 }
 
@@ -70,14 +70,16 @@ font-family: 'Barlow Condensed', sans-serif;
 }
 
 #trendingStyle {
-    margin-top: 50px;
-      height: 70px;
+    margin-top: 100px;
+      height: 40px;
+        font-size: 28px;
 
 }
 
 #recentStyle
 {
-  height: 70px;
+  height: 40px;
+    font-size: 28px;
 }
 
 .recentPlaceStyle {
@@ -88,7 +90,9 @@ font-family: 'Barlow Condensed', sans-serif;
 
 }
 
-
+#inputStyle {
+  padding-bottom: 5px;
+}
 
 .ftr {
   height: 30px;
@@ -101,7 +105,7 @@ font-family: 'Barlow Condensed', sans-serif;
   text-align: center;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 769px) {
   body {
   background-image: url("images/Logo_blue_mobile.png");
   background-attachment: fixed;
