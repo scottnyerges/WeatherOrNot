@@ -1,21 +1,4 @@
-/*
-*, *:before, *:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}*/
 
-/*.container {
-  margin: 0 auto;
-  max-width: 480px;
-  width: 90%;
-  background-color: aliceblue;
-  padding: 5px;
-border-width: 1px;
-border-color: black;
-border-style: solid;
-font-family: 'Barlow Condensed', sans-serif;
-}*/
 body {
   background-image: url("images/Logo_blue.png");
   background-attachment: fixed;
@@ -24,17 +7,22 @@ body {
 
 }
 
+.container {
+  font-size: 24px;
+font-family: 'Barlow Condensed', sans-serif;
+}
+
 .column {
 background-color: rgba(102, 217, 255, 0.1);
-padding: 5px;
-border: 1px;
+padding: 0px;
+/*border: 1px;
 border-color: ghostwhite;
-border-style: dotted;
+border-style: dotted;*/
 
 }
 .row {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 0px;
+  margin-bottom: 5px;
 
 }
 
@@ -42,6 +30,7 @@ border-style: dotted;
 #imgStyle {
     width: 100%;
     height: auto;
+
 }
 
 #linkStyle {
@@ -66,42 +55,13 @@ text-shadow: 0 1px 1px rgba(255, 255, 255, 0.62);
 -webkit-font-smoothing: antialiased;
 }
 
+
 /* STYLING FOR RESULTS HEADER */
-#resultHeadStyle {
+#resultHeadStyle, #trendingStyle, #recentStyle, #departReturnStyle {
   height: 40px;
   padding: 5px;
   margin-bottom: 5px;
-  background-color: #5c93c1;
-font-family: 'Barlow Condensed', sans-serif;
-  font-size: 28px;
-  color: white;
-  text-align: center;
-}
-/* STYLE FOR TREND BOX */
-#trendingStyle {
-  height: 40px;
-  padding: 5px;
-  margin-bottom: 5px;
-  background-color: #5c93c1;
-font-family: 'Barlow Condensed', sans-serif;
-  font-size: 28px;
-  color: white;
-  text-align: center;
-}
-#departReturnStyle {
-  height: 40px;
-  padding: 5px;
-  margin-bottom: 5px;
-  background-color: #5c93c1;
-font-family: 'Barlow Condensed', sans-serif;
-  font-size: 28px;
-  color: white;
-  text-align: center;
-}
-.ftr {
-  height: 40px;
-  padding: 5px;
-  margin-bottom: 5px;
+  margin-top: 5px;
   background-color: #5c93c1;
 font-family: 'Barlow Condensed', sans-serif;
   font-size: 28px;
@@ -109,7 +69,43 @@ font-family: 'Barlow Condensed', sans-serif;
   text-align: center;
 }
 
-@media screen and (max-width: 640px) {
+#trendingStyle {
+    margin-top: 100px;
+      height: 40px;
+        font-size: 28px;
+
+}
+
+#recentStyle
+{
+  height: 40px;
+    font-size: 28px;
+}
+
+.recentPlaceStyle {
+font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  color: black;
+  text-align: left;
+
+}
+
+#inputStyle {
+  padding-bottom: 5px;
+}
+
+.ftr {
+  height: 30px;
+  padding: 5px;
+  margin-bottom: 5px;
+  background-color: #5c93c1;
+font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  color: white;
+  text-align: center;
+}
+
+@media screen and (max-width: 769px) {
   body {
   background-image: url("images/Logo_blue_mobile.png");
   background-attachment: fixed;
@@ -130,6 +126,28 @@ font-family: 'Barlow Condensed', sans-serif;
   }
 
   .ftr{
-    font-size: 14px;
+    font-size: 12px;
   }
+
+.recentPlaceStyle {
+font-size: 24px;
+
 }
+
+#resultHeadStyle, #trendingStyle, #recentStyle, #departReturnStyle {
+  font-size: 20px;
+    height: 25px;
+    padding: 2px;
+
+}
+
+#trendingStyle, #recentStyle {
+    margin-top: 5px;
+
+}
+
+.container {
+  font-size: 16px;
+}
+
+

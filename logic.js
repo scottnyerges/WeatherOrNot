@@ -25,8 +25,8 @@ var i = 0;
 var fCount;
 var currentTime = moment().format('YYYY-MM-DD');
 var trendPlace;
-var maxTime = moment(uEndDate).add('days', 16).format('YYYY-MM-DD');
-var trendingCount = 0 ;
+var maxTime = moment(uEndDate).add(16, 'days').format('YYYY-MM-DD');
+var trendingCount = 0;
 var currentSel = "Dallas/Ft Worth, Texas";
 
 
@@ -47,8 +47,13 @@ $("#add-user").on("click", function() {
     console.log(uEndDate);
     console.log(currentTime);
     console.log(maxTime);
+    $("#dates").html("");
+    $("#results").html("");
 
-
+    $("#dates").append(`
+            <td scope=row>${uStartDate}</td>
+            <td>${uEndDate}</td>
+                    `);
 
 
     if (uStartDate < currentTime) {
@@ -61,6 +66,8 @@ $("#add-user").on("click", function() {
         $("#invalidEnd").html("<h5>Too Far Out!</h5>");
 
     } else if ((currentTime == uStartDate) || (uStartDate >= currentTime)) {
+
+
 
         $("#invalidStart").html("");
         $("#invalidEnd").html("");
@@ -78,12 +85,13 @@ $("#add-user").on("click", function() {
         $("#departure-input").val("");
         $("#return-input").val("");
 
+
     }
 
 });
 
 // this is the token for the SABRE API - it expires after a week
-// last updated 12/1 at ~1PM
+// last updated 12/8 at ~10AM
 // updateToken func will update it after we learn some more stuff next week
 var fToken = "T1RLAQIljucrG1j3XpIwO6BV6988PJPAthDaqu7kXDgL29xrugLx8ECUAADAutvU7eumJ7MjUeS94vFIObqCVD0q569VXQHkq/PzvtxAFjFEDjbKiMASefOG+NBdC9aX7Za0HaAg2TVR2WoLwuvxPGXHVhFyTEwuRniuim6uwU5js0bFPXDyyVoI9dqvarVcOXvPufb7SP+/LguW08TONDzNre8DWgDVOsBW+Kjn1D+YqBW+ly8NVICoDUDYCH7/CfqcE9jOfWxJFWMXaGnf+8FUdTqb5BD4jsULk/nic8M6+DIgmN2X3rhWmAHS";
 
@@ -161,21 +169,20 @@ function getTemps() {
             // and i++, then run get flights again unless we've hit the end of the flight list
             i++;
             console.log(i);
+
             if (wTemp - 7 < uTemp && uTemp < wTemp + 7) {
 
 
                 var newRow = $(`
-
         <tr>
             <td scope=row class="trending">${wDestination}</td>
             
             <td class="trending_temp">${wTemp} F</td>
-            <td>${uStartDate}</td>
-            <td>${uEndDate}</td>
             <td>$${fPrice}</td>
             // <td> <a href="https://www.kayak.com/flights/${origin}-${fDestination}/${uStartDate}/${uEndDate}?sort=price_a" target="_blank"></a></td>            
       </tr>
         `);
+
                 $("#results").append(newRow);
                 newRow.click(function() {
                     var a = $(this).find("a") //.click();
@@ -235,7 +242,7 @@ $("#start-input").autocomplete({
     //when you click an option, it fills the input field wth that
     select: function(event, ui) {
         var value = ui.item.value;
-    // then take the first 3 letters of that string and give that element a new attr with that code
+        // then take the first 3 letters of that string and give that element a new attr with that code
         $("#start-input").attr("code", value.substr(0, 3));
     }
 });
@@ -270,69 +277,65 @@ $("#start-input").autocomplete({
 
 
 
-database.ref("recentPlace").on('value', function(snapshot) {    
+database.ref("recentPlace").on('value', function(snapshot) {
     var tempSel = snapshot.val().recentP;
-   
-database.ref('resultsPlace').on("child_added", function(snapshot){
-// if the currently selected place matches previously selected places then it adds a point to the trending count
 
-    for(var i = 0; i < snapshot.numChildren(); i++){
-        if(tempSel == snapshot.val().trendingP){
-            trendingCount += 1;
-        }
+    database.ref('resultsPlace').on("child_added", function(snapshot) {
+        // if the currently selected place matches previously selected places then it adds a point to the trending count
 
-        if(tempSel != snapshot.val().trendingP){
 
-        }
+        for (var i = 0; i < snapshot.numChildren(); i++) {
+            if (tempSel == snapshot.val().trendingP) {
+                trendingCount += 1;
+            }
 
-    };
+
+            if (tempSel != snapshot.val().trendingP) {
+
+            }
+
+        };
     });
-    
-        console.log("this is the count after loop " + trendingCount);
-// if the trending count is greater than zero than it pushes the trending count and place into firebase
 
-        if((trendingCount > 0)){
-            currentSel = tempSel;
+    console.log("this is the count after loop " + trendingCount);
+    // if the trending count is greater than zero than it pushes the trending count and place into firebase
 
-            database.ref("trendingPl").push({
-                place: currentSel,
-                count:trendingCount
-            });
-            
-        }
+    if ((trendingCount > 0)) {
+        currentSel = tempSel;
 
-        else{
 
-        }
-// resets the trending count 
-trendingCount = 0; 
+        database.ref("trendingPl").push({
+            place: currentSel,
+            count: trendingCount
+        });
+
+
+    } else {
+
+    }
+    // resets the trending count 
+    trendingCount = 0;
 
 });
 // ---------------------------------------------------------------------------------------------
 // will take the child with the highest value 
 // the value is the number of matches with the current selection and recent searches
-    
-database.ref("trendingPl").orderByChild("count").limitToLast(1).on("child_added" , function(snapshot){
 
-        console.log("trending place " + snapshot.val().place + snapshot.val().count);
-            var recentSearchP = $("<h2>" + snapshot.val().place + "</h2>");
-            $("#trendingPlace").html(recentSearchP);
+database.ref("trendingPl").orderByChild("count").limitToLast(1).on("child_added", function(snapshot) {
 
-    });
+    console.log("trending place " + snapshot.val().place + snapshot.val().count);
+    var recentSearchP = $("<h2>" + snapshot.val().place + "</h2>");
+    $("#trendingPlace").html(recentSearchP);
+
+});
 
 
 database.ref("recentPlace").on('value', function(snapshot) {
 
     console.log(snapshot.val().recentP);
-        var recentSearchT = $("<h2>" + snapshot.val().recentP + "</h2>");
-        $("#recentPlace").html(recentSearchT);
+    var recentSearchT = $("<h2>" + snapshot.val().recentP + "</h2>");
+    $("#recentPlace").html(recentSearchT);
 
 }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
 });
-
-
-
- 
-
-
