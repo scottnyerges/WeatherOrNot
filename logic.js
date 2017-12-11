@@ -25,8 +25,8 @@ var i = 0;
 var fCount;
 var currentTime = moment().format('YYYY-MM-DD');
 var trendPlace;
-var maxTime = moment(uEndDate).add(16,'days').format('YYYY-MM-DD');
-var trendingCount = 0 ;
+var maxTime = moment(uEndDate).add(16, 'days').format('YYYY-MM-DD');
+var trendingCount = 0;
 var currentSel = "Dallas/Ft Worth, Texas";
 
 
@@ -47,8 +47,10 @@ $("#add-user").on("click", function() {
     console.log(uEndDate);
     console.log(currentTime);
     console.log(maxTime);
+    $("#dates").html("");
+    $("#results").html("");
 
-                $("#dates").append(`
+    $("#dates").append(`
             <td scope=row>${uStartDate}</td>
             <td>${uEndDate}</td>
                     `);
@@ -82,6 +84,7 @@ $("#add-user").on("click", function() {
         $("#temp-input").val("");
         $("#departure-input").val("");
         $("#return-input").val("");
+
 
     }
 
@@ -240,7 +243,7 @@ $("#start-input").autocomplete({
     //when you click an option, it fills the input field wth that
     select: function(event, ui) {
         var value = ui.item.value;
-    // then take the first 3 letters of that string and give that element a new attr with that code
+        // then take the first 3 letters of that string and give that element a new attr with that code
         $("#start-input").attr("code", value.substr(0, 3));
     }
 });
@@ -275,69 +278,61 @@ $("#start-input").autocomplete({
 
 
 
-database.ref("recentPlace").on('value', function(snapshot) {    
+database.ref("recentPlace").on('value', function(snapshot) {
     var tempSel = snapshot.val().recentP;
-   
-database.ref('resultsPlace').on("child_added", function(snapshot){
-// if the currently selected place matches previously selected places then it adds a point to the trending count
 
-    for(var i = 0; i < snapshot.numChildren(); i++){
-        if(tempSel == snapshot.val().trendingP){
-            trendingCount += 1;
-        }
+    database.ref('resultsPlace').on("child_added", function(snapshot) {
+        // if the currently selected place matches previously selected places then it adds a point to the trending count
 
-        if(tempSel != snapshot.val().trendingP){
+        for (var i = 0; i < snapshot.numChildren(); i++) {
+            if (tempSel == snapshot.val().trendingP) {
+                trendingCount += 1;
+            }
 
-        }
+            if (tempSel != snapshot.val().trendingP) {
 
-    };
+            }
+
+        };
     });
-    
-        console.log("this is the count after loop " + trendingCount);
-// if the trending count is greater than zero than it pushes the trending count and place into firebase
 
-        if((trendingCount > 0)){
-            currentSel = tempSel;
+    console.log("this is the count after loop " + trendingCount);
+    // if the trending count is greater than zero than it pushes the trending count and place into firebase
 
-            database.ref("trendingPl").push({
-                place: currentSel,
-                count:trendingCount
-            });
-            
-        }
+    if ((trendingCount > 0)) {
+        currentSel = tempSel;
 
-        else{
+        database.ref("trendingPl").push({
+            place: currentSel,
+            count: trendingCount
+        });
 
-        }
-// resets the trending count 
-trendingCount = 0; 
+    } else {
+
+    }
+    // resets the trending count 
+    trendingCount = 0;
 
 });
 // ---------------------------------------------------------------------------------------------
 // will take the child with the highest value 
 // the value is the number of matches with the current selection and recent searches
-    
-database.ref("trendingPl").orderByChild("count").limitToLast(1).on("child_added" , function(snapshot){
 
-        console.log("trending place " + snapshot.val().place + snapshot.val().count);
-            var recentSearchP = $("<h2>" + snapshot.val().place + "</h2>");
-            $("#trendingPlace").html(recentSearchP);
+database.ref("trendingPl").orderByChild("count").limitToLast(1).on("child_added", function(snapshot) {
 
-    });
+    console.log("trending place " + snapshot.val().place + snapshot.val().count);
+    var recentSearchP = $("<h2>" + snapshot.val().place + "</h2>");
+    $("#trendingPlace").html(recentSearchP);
+
+});
 
 
 database.ref("recentPlace").on('value', function(snapshot) {
 
     console.log(snapshot.val().recentP);
-        var recentSearchT = $("<h2>" + snapshot.val().recentP + "</h2>");
-        $("#recentPlace").html(recentSearchT);
+    var recentSearchT = $("<h2>" + snapshot.val().recentP + "</h2>");
+    $("#recentPlace").html(recentSearchT);
 
 }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
 });
-
-
-
- 
-
-
