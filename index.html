@@ -37,38 +37,38 @@
       </div>
 
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
           <div class="resultHead" id="resultHeadStyle">
             GET ME OUTTA HERE!
           </div>
           <!-- THIS IS THE INPUT FORM -->
           <form>
             <div class="form-group">
-              <label for="start-input">Your City: </label>
+              <label for="start-input" id="inputStyle">Your City: </label>
               <input class="form-control" id="start-input" type="text">
             </div>
             <div class="form-group">
-              <label for="temp-input">Temperature: </label>
+              <label for="temp-input" id="inputStyle">Temperature: </label>
               <input class="form-control" id="temp-input" type="number">
             </div>
             <div class="form-group">
-              <label for="departure-input">Departing: </label>
+              <label for="departure-input" id="inputStyle">Departing: </label>
               <input class="form-control" id="departure-input" type="Date">
               <div id="invalidStart"></div>
             </div>
             <div class="form-group">
-              <label for="return-input">Returning: </label>
+              <label for="return-input" id="inputStyle">Returning: </label>
               <input class="form-control" id="return-input" type="Date"></textarea>
               <div id="invalidEnd"></div>
             </div>
             <button class="btn btn-danger" id="add-user" type="submit">SUBMIT</button>
           </form>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <!-- TRENDING BOX -->
-          <div class="trending" id="recentStyle">MOST RECENT TRAVEL SEARCH</div>
+          <div class="trending" id="recentStyle">HOT TRAVEL SEARCHES</div>
           <div id="recentPlace"></div>
-          <div class="trending" id="trendingStyle">TRENDING VACATION DESTINATION</div>
+          <div class="trending" id="trendingStyle">TRENDING DESTINATIONS</div>
           <div class="cityTempStyle">
             <div id="trendingPlace"></div>
             <div id="trendingTemp"></div>
@@ -78,7 +78,7 @@
          <div class="row">
       <!-- Display for departure and arrival -->
       <div class = "col-md-12">
-        <div class="departReturnHead" id = "departReturnStyle">DEPARTURE / ARRIVAL DATES</div>
+        <div class="departReturnHead" id="departReturnStyle">DEPARTURE / ARRIVAL DATES</div>
         <div class="tableDepartReturn">
           <table class="table table-hover">
             <thead>
@@ -95,7 +95,7 @@
       </div>
 
       <div class = "col-md-12">
-        <div class="departReturnHead" id = "departReturnStyle">DREAM DESTINATION OPTIONS</div>
+        <div class="departReturnHead" id="departReturnStyle">DREAM DESTINATION OPTIONS</div>
         <div class="tableDepartReturn">
           <table class="table table-hover">
             <thead>
