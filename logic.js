@@ -283,10 +283,12 @@ database.ref("recentPlace").on('value', function(snapshot) {
     database.ref('resultsPlace').on("child_added", function(snapshot) {
         // if the currently selected place matches previously selected places then it adds a point to the trending count
 
+
         for (var i = 0; i < snapshot.numChildren(); i++) {
             if (tempSel == snapshot.val().trendingP) {
                 trendingCount += 1;
             }
+
 
             if (tempSel != snapshot.val().trendingP) {
 
@@ -301,10 +303,12 @@ database.ref("recentPlace").on('value', function(snapshot) {
     if ((trendingCount > 0)) {
         currentSel = tempSel;
 
+
         database.ref("trendingPl").push({
             place: currentSel,
             count: trendingCount
         });
+
 
     } else {
 
